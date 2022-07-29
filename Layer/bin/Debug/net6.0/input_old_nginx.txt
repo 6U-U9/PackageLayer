@@ -1,0 +1,388 @@
+digraph MyPicture {
+	graph [rankdir=LR]
+	expat
+	expat -> glibc
+	glibc
+	glibc -> basesystem
+	basesystem
+	basesystem -> setup
+	basesystem -> filesystem
+	setup
+	setup -> "anolis-release"
+	filesystem
+	filesystem -> setup
+	filesystem -> bash
+	bash
+	bash -> glibc
+	bash -> ncurses
+	bash -> filesystem
+	ncurses
+	ncurses -> glibc
+	"anolis-release"
+	dbus
+	dbus -> systemd
+	systemd
+	systemd -> "util-linux"
+	systemd -> sed
+	systemd -> glibc
+	systemd -> zlib
+	systemd -> libselinux
+	systemd -> libseccomp
+	systemd -> pcre2
+	systemd -> pam
+	systemd -> xz
+	systemd -> lz4
+	systemd -> kmod
+	systemd -> iptables
+	systemd -> libidn2
+	systemd -> "libgpg-error"
+	systemd -> gnutls
+	systemd -> libgcrypt
+	systemd -> gcc
+	systemd -> elfutils
+	systemd -> cryptsetup
+	systemd -> libxcrypt
+	systemd -> libcap
+	systemd -> bzip2
+	systemd -> audit
+	systemd -> acl
+	systemd -> grep
+	systemd -> dbus
+	systemd -> coreutils
+	systemd -> bash
+	"util-linux"
+	"util-linux" -> glibc
+	"util-linux" -> pam
+	"util-linux" -> zlib
+	"util-linux" -> libutempter
+	"util-linux" -> systemd
+	"util-linux" -> ncurses
+	"util-linux" -> libselinux
+	"util-linux" -> libxcrypt
+	"util-linux" -> "libcap-ng"
+	"util-linux" -> audit
+	"util-linux" -> coreutils
+	"util-linux" -> bash
+	sed
+	sed -> glibc
+	sed -> libselinux
+	sed -> acl
+	sed -> bash
+	zlib
+	zlib -> glibc
+	libselinux
+	libselinux -> glibc
+	libselinux -> pcre2
+	libselinux -> libsepol
+	libseccomp
+	libseccomp -> glibc
+	pcre2
+	pcre2 -> glibc
+	pam
+	pam -> glibc
+	pam -> libtirpc
+	pam -> libselinux
+	pam -> libpwquality
+	pam -> libnsl2
+	pam -> libdb
+	pam -> libxcrypt
+	pam -> cracklib
+	pam -> audit
+	pam -> coreutils
+	pam -> bash
+	xz
+	xz -> glibc
+	xz -> grep
+	xz -> bash
+	lz4
+	kmod
+	kmod -> glibc
+	kmod -> zlib
+	kmod -> xz
+	kmod -> gcc
+	kmod -> openssl
+	kmod -> bash
+	iptables
+	iptables -> glibc
+	iptables -> libpcap
+	iptables -> libnftnl
+	iptables -> libnfnetlink
+	iptables -> libnetfilter_conntrack
+	iptables -> libmnl
+	iptables -> bash
+	libidn2
+	libidn2 -> glibc
+	libidn2 -> libunistring
+	"libgpg-error"
+	"libgpg-error" -> glibc
+	gnutls
+	gnutls -> glibc
+	gnutls -> "p11-kit"
+	gnutls -> nettle
+	gnutls -> libunistring
+	gnutls -> libtasn1
+	gnutls -> libidn2
+	gnutls -> gmp
+	gnutls -> "crypto-policies"
+	libgcrypt
+	libgcrypt -> glibc
+	libgcrypt -> "libgpg-error"
+	gcc
+	gcc -> glibc
+	gcc -> zlib
+	gcc -> mpfr
+	gcc -> gmp
+	gcc -> bash
+	elfutils
+	cryptsetup
+	libxcrypt
+	libxcrypt -> glibc
+	libcap
+	libcap -> glibc
+	bzip2
+	bzip2 -> glibc
+	bzip2 -> bash
+	audit
+	audit -> systemd
+	audit -> glibc
+	audit -> krb5
+	audit -> "libcap-ng"
+	audit -> initscripts
+	audit -> coreutils
+	audit -> bash
+	acl
+	acl -> glibc
+	acl -> attr
+	grep
+	grep -> glibc
+	grep -> pcre
+	grep -> bash
+	coreutils
+	coreutils -> glibc
+	coreutils -> ncurses
+	coreutils -> libselinux
+	coreutils -> gmp
+	coreutils -> openssl
+	coreutils -> libcap
+	coreutils -> attr
+	coreutils -> acl
+	gmp
+	gmp -> glibc
+	openssl
+	openssl -> glibc
+	openssl -> zlib
+	openssl -> "tpm2-tss"
+	openssl -> libgcrypt
+	openssl -> coreutils
+	openssl -> bash
+	attr
+	"tpm2-tss"
+	"tpm2-tss" -> glibc
+	"tpm2-tss" -> openssl
+	"tpm2-tss" -> bash
+	pcre
+	pcre -> glibc
+	krb5
+	"libcap-ng"
+	"libcap-ng" -> glibc
+	initscripts
+	initscripts -> "util-linux"
+	initscripts -> systemd
+	initscripts -> "shadow-utils"
+	initscripts -> setup
+	initscripts -> glibc
+	initscripts -> "procps-ng"
+	initscripts -> popt
+	initscripts -> glib2
+	initscripts -> grep
+	initscripts -> gawk
+	initscripts -> findutils
+	initscripts -> filesystem
+	initscripts -> coreutils
+	initscripts -> bash
+	"shadow-utils"
+	"shadow-utils" -> setup
+	"shadow-utils" -> glibc
+	"shadow-utils" -> libsemanage
+	"shadow-utils" -> libselinux
+	"shadow-utils" -> libxcrypt
+	"shadow-utils" -> audit
+	"shadow-utils" -> attr
+	"shadow-utils" -> acl
+	"shadow-utils" -> coreutils
+	"procps-ng"
+	"procps-ng" -> glibc
+	"procps-ng" -> ncurses
+	"procps-ng" -> systemd
+	popt
+	popt -> glibc
+	glib2
+	glib2 -> glibc
+	glib2 -> zlib
+	glib2 -> libselinux
+	glib2 -> pcre
+	glib2 -> "util-linux"
+	glib2 -> gnutls
+	glib2 -> gcc
+	glib2 -> libffi
+	glib2 -> bash
+	gawk
+	gawk -> glibc
+	gawk -> libsigsegv
+	gawk -> readline
+	gawk -> mpfr
+	gawk -> gmp
+	gawk -> filesystem
+	findutils
+	findutils -> glibc
+	findutils -> libselinux
+	findutils -> bash
+	libsigsegv
+	libsigsegv -> glibc
+	readline
+	readline -> glibc
+	readline -> ncurses
+	readline -> texinfo
+	readline -> bash
+	mpfr
+	mpfr -> glibc
+	mpfr -> gmp
+	texinfo
+	libffi
+	libffi -> glibc
+	libsemanage
+	libsemanage -> glibc
+	libsemanage -> libsepol
+	libsemanage -> libselinux
+	libsemanage -> bzip2
+	libsemanage -> audit
+	libsepol
+	libsepol -> glibc
+	libsepol -> bash
+	"p11-kit"
+	"p11-kit" -> glibc
+	"p11-kit" -> libffi
+	nettle
+	nettle -> glibc
+	nettle -> gmp
+	nettle -> texinfo
+	nettle -> bash
+	libunistring
+	libunistring -> glibc
+	libunistring -> texinfo
+	libtasn1
+	libtasn1 -> glibc
+	"crypto-policies"
+	libpcap
+	libpcap -> glibc
+	libpcap -> "rdma-core"
+	libnftnl
+	libnftnl -> glibc
+	libnftnl -> libmnl
+	libnfnetlink
+	libnfnetlink -> glibc
+	libnetfilter_conntrack
+	libnetfilter_conntrack -> glibc
+	libnetfilter_conntrack -> libnfnetlink
+	libnetfilter_conntrack -> libmnl
+	libmnl
+	libmnl -> glibc
+	"rdma-core"
+	"rdma-core" -> glibc
+	"rdma-core" -> pciutils
+	"rdma-core" -> systemd
+	"rdma-core" -> libnl3
+	"rdma-core" -> bash
+	pciutils
+	pciutils -> glibc
+	pciutils -> kmod
+	pciutils -> hwdata
+	pciutils -> bash
+	libnl3
+	libnl3 -> glibc
+	libnl3 -> gcc
+	hwdata
+	libtirpc
+	libtirpc -> glibc
+	libtirpc -> krb5
+	libtirpc -> e2fsprogs
+	libpwquality
+	libpwquality -> glibc
+	libpwquality -> pam
+	libpwquality -> cracklib
+	libnsl2
+	libnsl2 -> glibc
+	libnsl2 -> libtirpc
+	libdb
+	libdb -> glibc
+	libdb -> openssl
+	cracklib
+	cracklib -> glibc
+	cracklib -> zlib
+	cracklib -> gzip
+	cracklib -> bash
+	gzip
+	gzip -> glibc
+	gzip -> coreutils
+	gzip -> bash
+	e2fsprogs
+	e2fsprogs -> glibc
+	e2fsprogs -> "util-linux"
+	e2fsprogs -> fuse
+	fuse
+	fuse -> which
+	fuse -> glibc
+	which
+	which -> glibc
+	libutempter
+	libutempter -> "shadow-utils"
+	libutempter -> glibc
+	libutempter -> bash
+	lvm2
+	lvm2 -> systemd
+	lvm2 -> glibc
+	lvm2 -> kmod
+	lvm2 -> libsepol
+	lvm2 -> libselinux
+	lvm2 -> readline
+	lvm2 -> "util-linux"
+	lvm2 -> libaio
+	lvm2 -> "device-mapper-persistent-data"
+	lvm2 -> bash
+	libaio
+	libaio -> glibc
+	"device-mapper-persistent-data"
+	"device-mapper-persistent-data" -> glibc
+	"device-mapper-persistent-data" -> gcc
+	"device-mapper-persistent-data" -> expat
+	"device-mapper-persistent-data" -> libaio
+	"json-c"
+	"json-c" -> glibc
+	libverto
+	libverto -> glibc
+	keyutils
+	keyutils -> glibc
+	keyutils -> bash
+	zstd
+	zstd -> glibc
+	zstd -> gcc
+	zstd -> bash
+	chkconfig
+	chkconfig -> glibc
+	chkconfig -> libsepol
+	chkconfig -> libselinux
+	chkconfig -> popt
+	"openssl-pkcs11"
+	"openssl-pkcs11" -> glibc
+	"openssl-pkcs11" -> "p11-kit"
+	"openssl-pkcs11" -> openssl
+	"ca-certificates"
+	"ca-certificates" -> sed
+	"ca-certificates" -> "p11-kit"
+	"ca-certificates" -> grep
+	"ca-certificates" -> coreutils
+	"ca-certificates" -> bash
+	tzdata
+	nginx
+}
+
