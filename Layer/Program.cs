@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 # region input
 //Build Graph
-string env = "redis";
+string env = "mysql";
 string excel = "circlebreak_"+env+".xlsx";
 //Console.WriteLine("0：原始算法；1：迭代分层；2：改进层间依赖；3：最大深度");
 //string? input = Console.ReadLine();

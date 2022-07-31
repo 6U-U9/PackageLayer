@@ -83,7 +83,8 @@ namespace Layer
         public List<List<Node>> layerList = new List<List<Node>>();
         public Dictionary<Package, int> algorithmLayers = new Dictionary<Package, int>();
         public Dictionary<Package, List<string>> packageCategory = new Dictionary<Package, List<string>>();
-        public Dictionary<Package, int> packageRelationCount = new Dictionary<Package, int>();
+        public Dictionary<Package, List<Package>> packageIn = new ();
+        public Dictionary<Package, List<Package>> packageOut = new();
 
         public Node getNode(string name)
         {
@@ -117,11 +118,15 @@ namespace Layer
 
             Package d = new Package(dependency);
             Package p = new Package(package);
-            if (packageRelationCount.ContainsKey(d))
-                packageRelationCount[d]++;
+
+            if (packageIn.ContainsKey(d))
+                packageIn[d].Add(p);
             else
-                packageRelationCount[d] = 1;
-            packageRelationCount[p]= packageRelationCount.ContainsKey(p)? packageRelationCount[p]+1 : 1;
+                packageIn[d] = new List<Package> { p};
+            if (packageOut.ContainsKey(p))
+                packageOut[p].Add(d);
+            else
+                packageOut[p]=new List<Package> { d};
         }
         public void addHumanLayer(string name, int layer)
         {
@@ -137,8 +142,9 @@ namespace Layer
             else
                 packageCategory[package].Add(category);
         }
-        public double calculatePackageCategoryProbability(Package package, List<Node> layer, List<List<Node>> layersList)
+        public double calculatePackageCategoryProbability(Package package, int index, List<List<Node>> layersList)
         {
+            List<Node> layer = layersList[index];
             double prob = 0;
             double categoryAllCount=0, categoryLayerCount=0, categoriesLayerSum = 0;
             foreach (Node node in layer)
@@ -173,38 +179,47 @@ namespace Layer
         }
         public double calculatePackageDependProbability(Package package, int index, List<List<Node>> layersList)
         {
-            List<Node> layer = layersList[index];
-            double prob = 0;
+            List<Node> inlayer = index - 1 < 0 ? new List<Node>() : layersList[index - 1];
+            List<Node> outlayer = index + 1 >= layersList.Count ? new List<Node>() : layersList[index + 1];
+            double probin = 1, probout = 1;
             double packageAllInCount = 0, packageLayerInCount = 0, packageAllOutCount = 0, packageLayerOutCount = 0;
-            foreach (Node node in layer)
+            if (packageIn.ContainsKey(package))
             {
-                foreach (Package p in node.packages)
-                {
-                    foreach (string category in packageCategory[p])
-                    {
-                        if (packageCategory[package].Contains(category))
-                        {
-                            categoryLayerCount++;
-                        }
-                        categoriesLayerSum++;
-                    }
-                }
-            }
-            foreach (List<Node> list in layersList)
-            {
-                foreach (Node node in list)
+                packageAllInCount = packageIn[package].Count;
+                foreach (Node node in inlayer)
                 {
                     foreach (Package p in node.packages)
                     {
-                        foreach (string category in packageCategory[p])
+                        if (packageIn[package].Contains(p))
                         {
-                            categoryAllCount++;
+                            packageLayerInCount++;
                         }
                     }
                 }
+                probin = (packageLayerInCount+1) / packageAllInCount;
             }
-            prob = (categoryLayerCount * categoryLayerCount) / (categoriesLayerSum * categoryAllCount);
-            return prob;
+            if (packageOut.ContainsKey(package))
+            {
+                packageAllOutCount = packageOut[package].Count;
+                foreach (Node node in outlayer)
+                {
+                    foreach (Package p in node.packages)
+                    {
+                        if (packageOut[package].Contains(p))
+                        {
+                            packageLayerOutCount++;
+                        }
+                    }
+                }
+                probout = (packageLayerOutCount + 1) / packageAllOutCount;
+            }
+            return probin*probout;
+        }
+        public double calculatePackageProbability(Package package, int index, List<List<Node>> layersList)
+        {
+            double c = calculatePackageCategoryProbability(package, index, layersList);
+            double d = calculatePackageDependProbability(package, index, layersList);
+            return c;
         }
         public void insertPackagesToLayer(List<Package> packages, List<List<Node>> layersList)
         { 
@@ -215,9 +230,9 @@ namespace Layer
                 int maxprobindex = 0;
                 for (int i = 0; i < layersList.Count; i++)
                 {
-                    if (calculatePackageCategoryProbability(package, layersList[i], layersList) > maxprob)
+                    if (calculatePackageProbability(package, i, layersList) > maxprob)
                     {
-                        maxprob=calculatePackageCategoryProbability(package, layersList[i], layersList);
+                        maxprob=calculatePackageProbability(package, i, layersList);
                         maxprobindex=i;
                     }
                 }
