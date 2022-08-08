@@ -54,6 +54,27 @@ namespace Layer
                     worksheetIn2.Cells[count2, 3].Value = set.humanLayers.ContainsKey(package)? set.humanLayers[package] : "null";
                     count2++;
                 }
+
+                var hasSheet3 = p.Workbook.Worksheets[set.algorithm + "对比2"];
+                if (hasSheet3 != null)
+                {
+                    p.Workbook.Worksheets.Delete(set.algorithm + "对比2");
+                }
+                ExcelWorksheet worksheetIn3 = p.Workbook.Worksheets.Add(set.algorithm + "对比2");
+                for (int i = 0; i < set.layerList.Count; i++)
+                {
+                    worksheetIn3.Cells[1, i + 1].Value = "layer " + (i + 1).ToString();
+                    int count = 2;
+                    for (int j = 0; j < set.layerList[i].Count; j++)
+                    {
+                        foreach (Package package in set.layerList[i][j].packages)
+                        {
+                            worksheetIn3.Cells[count, i + 1].Value = set.humanLayers.ContainsKey(package) ? set.humanLayers[package] : "null";
+                            count++;
+                        }
+                    }
+                }
+                
                 p.Save();
             }
         }
