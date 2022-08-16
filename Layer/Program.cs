@@ -85,6 +85,9 @@ catch (Exception e)
 # endregion
 
 var temp = set.humanLayers.Keys.Except(set.packages);
+
+var circle = set.findAllCircle();
+
 //DFS
 set.dfs();
 

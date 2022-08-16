@@ -86,6 +86,59 @@ namespace Layer
         public Dictionary<Package, List<Package>> packageIn = new ();
         public Dictionary<Package, List<Package>> packageOut = new();
 
+        public List<List<Node>> findAllCircle()
+        {
+            List<List<Node>> circles = new();
+            Dictionary<Node, List<List<Node>>> circleNodeset = new();
+            foreach (Node node in nodeSet.Values)
+            {
+                circleNodeset[node] = new();
+                circleNodeset[node].Add(new List<Node>());
+            }
+            bool finish = false;
+            while (!finish)
+            {
+                finish = true;
+                Dictionary<Node, List<List<Node>>> circleNodesetNext = new();
+                foreach (Node node in nodeSet.Values)
+                {
+                    circleNodesetNext[node] = new();
+                    if(circleNodeset[node].Count>0)
+                        finish=false;
+                }
+                foreach (Node node in nodeSet.Values)
+                {
+                    foreach (List<Node> stack in circleNodeset[node])
+                    {
+                        if (stack.Contains(node))
+                        {
+                            //todo : gen circle without duplicate
+                            List<Node> nodes = new();
+                            nodes.AddRange(stack);
+                            nodes.Sort((a, b) =>
+                            {
+                                return a.packages[0].name.CompareTo(b.packages[0].name);
+                            });
+                            if (nodes[0] == node)
+                                circles.Add(stack);
+                        }
+                        else
+                        {
+                            List<Node> nodes = new();
+                            nodes.AddRange(stack);
+                            nodes.Add(node);
+                            foreach (Package p in node.dependency)
+                            {
+                                circleNodesetNext[getNode(p)].Add(nodes);
+                            }
+                        }
+                    }
+                }
+                circleNodeset = circleNodesetNext;
+            }
+            return circles;
+        }
+
         public Node getNode(string name)
         {
             Package package = new Package(name);
@@ -461,9 +514,9 @@ namespace Layer
             int count = 0;
             foreach (Node node in remain)
             {
-                foreach (Package dependency in node.dependency)
+                foreach (Node dependency in node.outNodes)
                 {
-                    if (lastlayer.Contains(getNode(dependency)))
+                    if (lastlayer.Contains(dependency))
                         count++;
                 }
             }
@@ -474,9 +527,9 @@ namespace Layer
             int count = 0;
             foreach (Node node in remain)
             {
-                foreach (Node dependency in node.outNodes)
+                foreach (Package dependency in node.dependency)
                 {
-                    if (lastlayer.Contains(dependency))
+                    if (lastlayer.Contains(getNode(dependency)))
                         count++;
                 }
             }
