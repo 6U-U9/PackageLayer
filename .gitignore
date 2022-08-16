@@ -1,0 +1,4 @@
+.vs/
+*.xlsx
+bin/
+obj/

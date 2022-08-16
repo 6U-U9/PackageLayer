@@ -834,7 +834,7 @@ namespace Layer
             merged.Reverse();
             return merged;
         }
-        public List<List<Node>> mergeLayerv2Max(List<List<Node>> layers, int finalLayerCount = 3)
+        public List<List<Node>> mergeLayerv2Max(List<List<Node>> layers, int finalLayerCount = 4)
         {
             buildMap();
             calculateIndirectInNodes();
@@ -856,6 +856,58 @@ namespace Layer
                 {
                     layers[maxDependency] = layers[maxDependency].Concat(layers[maxDependency + 1]).ToList();
                     layers.RemoveAt(maxDependency + 1);
+                }
+            }
+            return layers;
+        }
+        public List<List<Node>> mergeLayerv2MaxWithoutZero(List<List<Node>> layers, int finalLayerCount = 4)
+        {
+            buildMap();
+            calculateIndirectInNodes();
+            List<List<Node>> merged = new List<List<Node>>();
+
+            while (finalLayerCount < layers.Count)
+            {
+                int maxDependency = -1, maxCount = -1;
+                for (int i = 2; i < layers.Count; i++)
+                {
+                    int count = countLayerNodeDepend(layers[i].ToHashSet(), layers[i - 1]);
+                    if (count > maxCount)
+                    {
+                        maxDependency = i - 1;
+                        maxCount = count;
+                    }
+                }
+                if (maxDependency >= 0)
+                {
+                    layers[maxDependency] = layers[maxDependency].Concat(layers[maxDependency + 1]).ToList();
+                    layers.RemoveAt(maxDependency + 1);
+                }
+            }
+            return layers;
+        }
+        public List<List<Node>> mergeLayerv2WithoutZero(List<List<Node>> layers, int finalLayerCount = 4)
+        {
+            buildMap();
+            calculateIndirectInNodes();
+            List<List<Node>> merged = new List<List<Node>>();
+
+            while (finalLayerCount < layers.Count)
+            {
+                int minDependency = -1, minCount = int.MaxValue;
+                for (int i = 2; i < layers.Count; i++)
+                {
+                    int count = countLayerNodeDepend(layers[i].ToHashSet(), layers[i - 1]);
+                    if (count < minCount)
+                    {
+                        minDependency = i - 1;
+                        minCount = count;
+                    }
+                }
+                if (minDependency >= 0)
+                {
+                    layers[minDependency] = layers[minDependency].Concat(layers[minDependency + 1]).ToList();
+                    layers.RemoveAt(minDependency + 1);
                 }
             }
             return layers;
