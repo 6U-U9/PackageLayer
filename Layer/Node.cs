@@ -10,7 +10,11 @@ namespace Layer
     {
         public List<Package> dependency = new List<Package>();
         public List<Package> packages = new List<Package>();
+        public Dictionary<Node,int> circleEdgeCount = new ();
         public int color = 0;//0, white; 1, gray; 2, black
+        public bool visited = false;
+        public bool started = false;
+
         public int maxDepth = 0;
 
         public HashSet<Node> inNodes = new HashSet<Node>();//被哪些包依赖
@@ -76,6 +80,7 @@ namespace Layer
     public class NodeSet
     {
         public Dictionary<Package, Node> singleNodeSet = new Dictionary<Package, Node>();
+
         public Dictionary<Package,Node> nodeSet=new Dictionary<Package,Node>();
         public HashSet<Package> packages = new HashSet<Package>();
         public Dictionary<Package, int> humanLayers = new Dictionary<Package, int>();
@@ -85,6 +90,8 @@ namespace Layer
         public Dictionary<Package, List<string>> packageCategory = new Dictionary<Package, List<string>>();
         public Dictionary<Package, List<Package>> packageIn = new ();
         public Dictionary<Package, List<Package>> packageOut = new();
+
+        public List<(Package,Package,int)> circleEdgeCount = new();
 
         public List<List<Node>> findAllCircle()
         {
@@ -138,6 +145,60 @@ namespace Layer
             }
             return circles;
         }
+        public void dfs_circle_count()
+        {
+            foreach (Node node in nodeSet.Values)
+            {
+                Console.WriteLine("----" + node.ToString() + "----");
+                dfs_search_circle_count(node,node);
+                node.started = true;
+            }
+        }
+        public void dfs_search_circle_count(Node node,Node start)
+        {
+            node.visited=true;
+            for (int i = 0; i < node.dependency.Count; i++)
+            {
+                Node next = getNode(node.dependency[i]);
+                if (next.visited == false && next.started == false)
+                {
+                    next.forward = node;
+                    dfs_search_circle_count(next, start);
+                }
+                else if (next == start)
+                {
+                    string cs="";
+                    Node? p = node;
+                    Node? prev = node.forward;
+                    node.circleEdgeCount[next] = node.circleEdgeCount.ContainsKey(next) ? node.circleEdgeCount[next] + 1 : 1;
+                    while (p != start)
+                    {
+                        cs = p.ToString() + cs;
+                        prev.circleEdgeCount[p] = prev.circleEdgeCount.ContainsKey(p) ? prev.circleEdgeCount[p] + 1 : 1;
+                        p = prev;
+                        prev = prev.forward;
+                    }
+                    cs = start.ToString() + cs + "\n";
+                    //Console.WriteLine(cs);
+                }
+            }
+            node.visited = false;
+        }
+        public void buildEdgeSet()
+        {
+            foreach (var node in nodeSet.Values)
+            {
+                foreach (var dependency in node.dependency)
+                {
+                    int c = 0;
+                    if (node.circleEdgeCount.ContainsKey(getNode(dependency)))
+                        c = node.circleEdgeCount[getNode(dependency)];
+                    circleEdgeCount.Add((node.packages[0],dependency,c));
+                }
+            }
+            circleEdgeCount.Sort((b,a)=>{ return a.Item3.CompareTo(b.Item3); });
+        }
+
 
         public Node getNode(string name)
         {

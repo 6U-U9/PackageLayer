@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 # region input
 //Build Graph
-string env = "redis";
+string env = "nginx";
 string excel = "circlebreak_"+env+".xlsx";
 //Console.WriteLine("0：原始算法；1：迭代分层；2：改进层间依赖；3：最大深度");
 //string? input = Console.ReadLine();
@@ -86,7 +86,18 @@ catch (Exception e)
 
 var temp = set.humanLayers.Keys.Except(set.packages);
 
-var circle = set.findAllCircle();
+set.dfs_circle_count();
+set.buildEdgeSet();
+
+using (StreamWriter sw = new StreamWriter("circles_" + env + ".txt"))
+{
+    foreach (var edge in set.circleEdgeCount)
+    {
+        string cs = edge.Item1.name + "->" + edge.Item2.name + " " + edge.Item3;
+        sw.WriteLine(cs);
+    }
+    sw.Flush();
+}
 
 //DFS
 set.dfs();
