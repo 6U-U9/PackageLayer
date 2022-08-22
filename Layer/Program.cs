@@ -3,8 +3,9 @@ using System.Text.RegularExpressions;
 
 # region input
 //Build Graph
-string env = "nginx";
-string excel = "circlebreak_"+env+".xlsx";
+string env = "mysql";
+string output_prefix = "edge_remove_glibc-libselinux";
+string excel = output_prefix+"_"+env+".xlsx";
 //Console.WriteLine("0：原始算法；1：迭代分层；2：改进层间依赖；3：最大深度");
 //string? input = Console.ReadLine();
 //int algorithm = input == null ? 0 : int.Parse(input);
@@ -88,16 +89,20 @@ var temp = set.humanLayers.Keys.Except(set.packages);
 
 set.dfs_circle_count();
 set.buildEdgeSet();
+Console.WriteLine(set.getNode("glibc").dependency.Remove(new Package("libselinux")));
+//set.removeKeyEdges(60000);
 
-using (StreamWriter sw = new StreamWriter("circles_" + env + ".txt"))
-{
-    foreach (var edge in set.circleEdgeCount)
-    {
-        string cs = edge.Item1.name + "->" + edge.Item2.name + " " + edge.Item3;
-        sw.WriteLine(cs);
-    }
-    sw.Flush();
-}
+# region Output ciecle edges count
+//using (StreamWriter sw = new StreamWriter("circles_" + env + ".txt"))
+//{
+//    foreach (var edge in set.circleEdgeCount)
+//    {
+//        string cs = edge.Item1.name + "->" + edge.Item2.name + " " + edge.Item3;
+//        sw.WriteLine(cs);
+//    }
+//    sw.Flush();
+//}
+# endregion
 
 //DFS
 set.dfs();
@@ -151,7 +156,8 @@ void iterate(NodeSet set)
     }
     //layerList = set.mergeLayer(layerList, set.nodeSet.Values.ToHashSet().Count / 2);
     //layerList = set.mergeLayerv2WithoutZero(layerList);
-    //layerList = set.mergeLayerv2Max(layerList);
+    layerList = set.mergeLayerv2Max(layerList);
+
     set.genAlgorithmLayer(layerList);
     set.algorithm = "迭代分层";
     set.layerList = layerList;
@@ -167,6 +173,8 @@ void improved(NodeSet set)
     //var testIn = set.generateLayerIn(topoList);
     var layerList = set.generateNewLayers(topoList);
     //layerList = set.mergeLayerv2WithoutZero(layerList);
+    layerList = set.mergeLayerv2Max(layerList);
+
     set.genAlgorithmLayer(layerList);
     set.algorithm = "改进依赖";
     set.layerList = layerList;
@@ -179,8 +187,8 @@ void improved(NodeSet set)
 void MaxDepth(NodeSet set)
 {
     var layerList = set.generateLayerBasedMaxDepth();
-    
     //layerList = set.mergeLayerv2WithoutZero(layerList);
+    layerList = set.mergeLayerv2Max(layerList);
     //set.relayerCirclePackage(layerList);
 
     set.genAlgorithmLayerV2(layerList);

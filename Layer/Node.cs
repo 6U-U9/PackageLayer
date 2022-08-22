@@ -198,7 +198,16 @@ namespace Layer
             }
             circleEdgeCount.Sort((b,a)=>{ return a.Item3.CompareTo(b.Item3); });
         }
-
+        public void removeKeyEdges(int threshold)
+        {
+            foreach (var edge in circleEdgeCount)
+            {
+                if (edge.Item3 > threshold)
+                {
+                    getNode(edge.Item1.name).dependency.Remove(edge.Item2);
+                } 
+            }
+        }
 
         public Node getNode(string name)
         {
@@ -406,6 +415,11 @@ namespace Layer
         }
         public void dfs()
         {
+            foreach (Node node in nodeSet.Values)
+            {
+                node.color = 0;
+                node.forward = null;
+            }
             foreach (Node node in nodeSet.Values)
             {
                 if (node.color == 0)
