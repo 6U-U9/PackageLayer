@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 # region input
 //Build Graph
-string env = "mysql";
+string env = "redis";
 string output_prefix = "edge_remove_glibc-libselinux";
 string excel = output_prefix+"_"+env+".xlsx";
 //Console.WriteLine("0：原始算法；1：迭代分层；2：改进层间依赖；3：最大深度");
@@ -155,8 +155,8 @@ void iterate(NodeSet set)
         layerList = nextLayerList;
     }
     //layerList = set.mergeLayer(layerList, set.nodeSet.Values.ToHashSet().Count / 2);
-    //layerList = set.mergeLayerv2WithoutZero(layerList);
-    layerList = set.mergeLayerv2Max(layerList);
+    layerList = set.mergeLayerv2(layerList);
+    //layerList = set.mergeLayerv2Max(layerList);
 
     set.genAlgorithmLayer(layerList);
     set.algorithm = "迭代分层";
@@ -172,8 +172,8 @@ void improved(NodeSet set)
     var topoList = set.generateTopoList(set.nodeSet.Values.ToHashSet());
     //var testIn = set.generateLayerIn(topoList);
     var layerList = set.generateNewLayers(topoList);
-    //layerList = set.mergeLayerv2WithoutZero(layerList);
-    layerList = set.mergeLayerv2Max(layerList);
+    layerList = set.mergeLayerv2(layerList);
+    //layerList = set.mergeLayerv2Max(layerList);
 
     set.genAlgorithmLayer(layerList);
     set.algorithm = "改进依赖";
@@ -187,8 +187,8 @@ void improved(NodeSet set)
 void MaxDepth(NodeSet set)
 {
     var layerList = set.generateLayerBasedMaxDepth();
-    //layerList = set.mergeLayerv2WithoutZero(layerList);
-    layerList = set.mergeLayerv2Max(layerList);
+    layerList = set.mergeLayerv2(layerList);
+    //layerList = set.mergeLayerv2Max(layerList);
     //set.relayerCirclePackage(layerList);
 
     set.genAlgorithmLayerV2(layerList);

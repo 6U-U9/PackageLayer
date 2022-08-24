@@ -52,8 +52,13 @@ namespace Layer
                     worksheetIn2.Cells[count2, 1].Value = package.name;
                     worksheetIn2.Cells[count2, 2].Value = set.algorithmLayers[package];
                     worksheetIn2.Cells[count2, 3].Value = set.humanLayers.ContainsKey(package)? set.humanLayers[package] : "null";
+                    worksheetIn2.Cells[count2, 4].Formula = String.Format("=IF(INT(B{0})=INT(C{1}),\"yes\",\"no\")",count2,count2);
                     count2++;
                 }
+                worksheetIn2.Cells[2, 5].Value = "yes";
+                worksheetIn2.Cells[3, 5].Value = "no";
+                worksheetIn2.Cells[2, 6].Formula = String.Format("=COUNTIF(D:D,\"yes\")");
+                worksheetIn2.Cells[3, 6].Formula = String.Format("=COUNTIF(D:D,\"no\")");
 
                 var hasSheet3 = p.Workbook.Worksheets[set.algorithm + "对比2"];
                 if (hasSheet3 != null)

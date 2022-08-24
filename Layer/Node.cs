@@ -987,24 +987,22 @@ namespace Layer
             }
             return layers;
         }
-        public List<List<Node>> mergeLayerv2(List<List<Node>> layers, int dependencyThreshold = 25)
+        public List<List<Node>> mergeLayerv2(List<List<Node>> layers, int finalLayerCount = 4)
         {
             buildMap();
             calculateIndirectInNodes();
-            if (layers.Count <= 1) return layers;
             List<List<Node>> merged = new List<List<Node>>();
-            int minDependency = -1, minCount = int.MaxValue;
-            do
+
+            while (finalLayerCount < layers.Count)
             {
-                minDependency = -1;
-                minCount = int.MaxValue;
+                int minDependency = -1, minCount = int.MaxValue;
                 for (int i = 1; i < layers.Count; i++)
                 {
                     int count = countLayerNodeDepend(layers[i].ToHashSet(), layers[i - 1]);
-                    if (count < dependencyThreshold && count <minCount)
+                    if (count < minCount)
                     {
                         minDependency = i - 1;
-                        minCount = count;  
+                        minCount = count;
                     }
                 }
                 if (minDependency >= 0)
@@ -1013,9 +1011,37 @@ namespace Layer
                     layers.RemoveAt(minDependency + 1);
                 }
             }
-            while (minDependency >= 0);
             return layers;
         }
+        //public List<List<Node>> mergeLayerv2(List<List<Node>> layers, int dependencyThreshold = 25)
+        //{
+        //    buildMap();
+        //    calculateIndirectInNodes();
+        //    if (layers.Count <= 1) return layers;
+        //    List<List<Node>> merged = new List<List<Node>>();
+        //    int minDependency = -1, minCount = int.MaxValue;
+        //    do
+        //    {
+        //        minDependency = -1;
+        //        minCount = int.MaxValue;
+        //        for (int i = 1; i < layers.Count; i++)
+        //        {
+        //            int count = countLayerNodeDepend(layers[i].ToHashSet(), layers[i - 1]);
+        //            if (count < dependencyThreshold && count <minCount)
+        //            {
+        //                minDependency = i - 1;
+        //                minCount = count;  
+        //            }
+        //        }
+        //        if (minDependency >= 0)
+        //        {
+        //            layers[minDependency] = layers[minDependency].Concat(layers[minDependency + 1]).ToList();
+        //            layers.RemoveAt(minDependency + 1);
+        //        }
+        //    }
+        //    while (minDependency >= 0);
+        //    return layers;
+        //}
 
         private bool isLayerDependv2(List<Node> layer, List<Node> lastlayer)
         {
