@@ -33,3 +33,5 @@ D:\Code\C#\Layer\Refactor\obj\Debug\net6.0\refint\Refactor.dll
 D:\Code\C#\Layer\Refactor\obj\Debug\net6.0\Refactor.pdb
 D:\Code\C#\Layer\Refactor\obj\Debug\net6.0\Refactor.genruntimeconfig.cache
 D:\Code\C#\Layer\Refactor\obj\Debug\net6.0\ref\Refactor.dll
+D:\Code\C#\Layer\Refactor\obj\Debug\net6.0\Refactor.Resources.resources
+D:\Code\C#\Layer\Refactor\obj\Debug\net6.0\Refactor.csproj.GenerateResource.cache

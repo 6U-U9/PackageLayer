@@ -57,6 +57,12 @@ namespace Layer
         }
         public int getOutNodeCount()
         {
+            List<string> human_0 = new List<string> { "glibc", "basesystem", "filesystem", "setup", "anolis-release", "coreutils", "gcc", "systemd" };
+            foreach (Package p in packages)
+            {
+                if (human_0.Contains(p.name))
+                    return 0;
+            }
             return outNodes.Count;
         }
         public int getIndirectInNodeCount()
@@ -813,6 +819,7 @@ namespace Layer
                     }
                 }
             }
+
             return list;
         }
         public List<List<Node>> mergeLayer(List<List<Node>> layers, int dependencyThreshold=0)
