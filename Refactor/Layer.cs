@@ -39,6 +39,18 @@ namespace Refactor
             }
             return false;
         }
+        public static implicit operator List<Node>(Layer layer)
+        {
+            return layer.nodes;
+        }
+        public static implicit operator HashSet<Node>(Layer layer)
+        {
+            return layer.nodes.ToHashSet();
+        }
+        public static implicit operator Layer(List<Node> layer)
+        {
+            return new Layer(layer);
+        }
         public override string ToString()
         {
             string s = "Layer:";
