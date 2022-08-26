@@ -8,67 +8,41 @@ namespace Refactor
 {
     public class Node
     {
-        public List<Package> dependency = new List<Package>();
-        public List<Package> packages = new List<Package>();
+        public HashSet<Package> packages = new();
 
-        public HashSet<Node> inNodes = new HashSet<Node>();//被哪些包依赖
-        public HashSet<Node> indirectInNodes = new HashSet<Node>();
-        public HashSet<Node> outNodes = new HashSet<Node>();//依赖哪些包
-        public HashSet<Node> indirectOutNodes = new HashSet<Node>();
+        public List<Node> dependents = new(); //被哪些包依赖
+        public List<Node> indirectDependents = new();
+        public List<Node> dependencies = new(); //依赖哪些包
+        public List<Node> indirectDependencies = new();
 
-        public int color = 0;//0, white; 1, gray; 2, black
+        public int color = 0; //0, white; 1, gray; 2, black
         public Node? forward = null;
+
+        public Node()
+        {
+        }
 
         public Node(Package package)
         {
             this.packages.Add(package);
-            this.dependency.AddRange(package.dependency);
         }
-        public Node(List<Package> dependency, List<Package> packages)
+
+        public Node(List<Node> nodes)
         {
-            this.dependency = dependency;
-            this.packages = packages;
-        }
-        public static Node Union(List<Node> ring)
-        {
-            List<Package> newDependency = new List<Package>();
-            List<Package> newPackages = new List<Package>();
-            foreach (Node node in ring)
+            foreach (var node in nodes)
             {
-                newDependency = newDependency.Union(node.dependency).ToList();
-                newPackages = newPackages.Union(node.packages).ToList();
+                foreach (var package in node.packages)
+                {
+                    this.packages.Add(package);
+                }
             }
-            newDependency = newDependency.Except(newPackages).ToList();
-            return new Node(newDependency, newPackages);
         }
-        public void addInNode(Node node)
-        {
-            inNodes.Add(node);
-        }
-        public void addOutNode(Node node)
-        {
-            outNodes.Add(node);
-        }
-        public int getInNodeCount()
-        {
-            return inNodes.Count / packages.Count;
-        }
-        public int getOutNodeCount()
-        {
-            return outNodes.Count;
-        }
-        public int getIndirectInNodeCount()
-        {
-            return indirectInNodes.Count / packages.Count;
-        }
-        public int getIndirectOutNodeCount()
-        {
-            return indirectOutNodes.Count;
-        }
-        public bool isCircleNode()
+
+        public bool IsCircleNode()
         {
             return packages.Count > 1;
         }
+
         public override string ToString()
         {
             string s = "";
@@ -76,6 +50,7 @@ namespace Refactor
             {
                 s += package.ToString() + ";";
             }
+
             return s;
         }
     }

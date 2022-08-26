@@ -2,3 +2,4 @@
 *.xlsx
 bin/
 obj/
+.idea/

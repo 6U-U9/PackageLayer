@@ -13,7 +13,7 @@ namespace Refactor
         public const string HUMAN_PREFIX = "human_";
         public const string INPUT_PREFIX = "input_";
         public List<string[]> dependencies = new();
-        public List<(string, int)> humanLayers = new();
+        public Dictionary<string,int> humanLayers = new();
 
         public Input(string environment)
         {
@@ -64,9 +64,10 @@ namespace Refactor
                 {
                     sArray[i] = Format(sArray[i]);
                 }
+
                 int l;
                 if (int.TryParse(sArray[1], out l))
-                    humanLayers.Add((sArray[0], l));
+                    humanLayers[sArray[0]] = l;
             }
         }
     }

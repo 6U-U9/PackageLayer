@@ -8,6 +8,20 @@ namespace Refactor
 {
     public struct Package
     {
+        public static Dictionary<string,Package> packages = new();
+        public static Package Create(string name,int? human=null)
+        {
+            if(!packages.ContainsKey(name))
+            {
+                Package p = new Package(name, human);
+                packages[name] = p;
+            }
+            return packages[name];
+        }
+        public static Package Get(string name)
+        {
+            return packages[name];
+        }
         public string name { get; set; }
         public int? human { get; set; }
         public List<string> category = new List<string>();
@@ -16,7 +30,7 @@ namespace Refactor
         public List<Package> dependency = new List<Package>();
         public List<Package> dependent = new List<Package>();
 
-        public Package(string name,int? human=null)
+        private Package(string name,int? human=null)
         {
             this.name = name;  
             this.human = human;
