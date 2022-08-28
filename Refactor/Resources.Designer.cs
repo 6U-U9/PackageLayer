@@ -227,6 +227,21 @@ namespace Refactor {
         }
         
         /// <summary>
+        ///   查找类似 a 0
+        ///b 0
+        ///c 0
+        ///d 0
+        ///e 0
+        ///f 0
+        /// 的本地化字符串。
+        /// </summary>
+        internal static string human_test {
+            get {
+                return ResourceManager.GetString("human_test", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 digraph MyPicture {
         ///	graph [rankdir=LR]
         ///	setools
@@ -335,6 +350,19 @@ namespace Refactor {
         internal static string input_redis {
             get {
                 return ResourceManager.GetString("input_redis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 a -&gt; b
+        ///b -&gt; c
+        ///c -&gt; a
+        ///a -&gt; d
+        ///d -&gt; c 的本地化字符串。
+        /// </summary>
+        internal static string input_test {
+            get {
+                return ResourceManager.GetString("input_test", resourceCulture);
             }
         }
     }

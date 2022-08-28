@@ -57,12 +57,12 @@ namespace Layer
         }
         public int getOutNodeCount()
         {
-            List<string> human_0 = new List<string> { "glibc", "basesystem", "filesystem", "setup", "anolis-release", "coreutils", "gcc", "systemd" };
-            foreach (Package p in packages)
-            {
-                if (human_0.Contains(p.name))
-                    return 0;
-            }
+            //List<string> human_0 = new List<string> { "glibc", "basesystem", "filesystem", "setup", "anolis-release", "coreutils", "gcc", "systemd" };
+            //foreach (Package p in packages)
+            //{
+            //    if (human_0.Contains(p.name))
+            //        return 0;
+            //}
             return outNodes.Count;
         }
         public int getIndirectInNodeCount()
@@ -1067,7 +1067,7 @@ namespace Layer
             if (lastUpper.Except(thisUpper).Except(thisLayer).ToList().Count == 0)
                 return true;
             return false;
-        }
+        } //fin
         private bool isLayerDependv2In(List<Node> layer, List<Node> lastlayer)
         {
             HashSet<Node> lastLayer = lastlayer.ToHashSet();
@@ -1085,7 +1085,7 @@ namespace Layer
             if(lastDependencies.Except(thisDependencies).Except(thisLayer).ToList().Count==0)
                 return true;
             return false;
-        }
+        } //fin
         public List<Node> generateTopoListIn(HashSet<Node> part)
         {
             buildMap(part);
@@ -1118,7 +1118,7 @@ namespace Layer
                 }
             }
             return list;
-        }
+        } //fin
         public List<List<Node>> generateNewLayers(List<Node> topoList)
         {
             buildMap(topoList.ToHashSet());
@@ -1150,7 +1150,7 @@ namespace Layer
                 i++;
             }
             return newLayers;
-        }
+        } //fin
         public List<List<Node>> generateNewLayersIn(List<Node> topoList)
         {
             buildMap(topoList.ToHashSet());
@@ -1182,7 +1182,7 @@ namespace Layer
                 i++;
             }
             return newLayers;
-        }
+        } //fin
 
 
         #region 废弃的方法

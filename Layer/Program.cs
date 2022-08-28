@@ -3,10 +3,10 @@ using System.Text.RegularExpressions;
 
 # region input
 //Build Graph
-string env = "redis";
+string env = "mysql";
 //"glibc", "basesystem", "filesystem", "setup", "anolis-release", "coreutils", "gcc", "systemd" 
 List<string> exclude = new List<string> { };
-List<string> excludeIn = new List<string> { "systemd","coreutils" };
+List<string> excludeIn = new List<string> { };
 List<string> excludeOut = new List<string> { };
 string output_prefix = "circlebreak_human0_-systemd-coreutils";
 string excel = output_prefix+"_"+env+".xlsx";
@@ -97,7 +97,7 @@ var temp = set.humanLayers.Keys.Except(set.packages);
 
 //set.dfs_circle_count();
 //set.buildEdgeSet();
-Console.WriteLine(set.getNode("glibc").dependency.Remove(new Package("libselinux")));
+//Console.WriteLine(set.getNode("glibc").dependency.Remove(new Package("libselinux")));
 //set.removeKeyEdges(60000);
 
 # region Output ciecle edges count
@@ -130,8 +130,11 @@ void printLayers(List<List<Node>> layerList)
 #region origin
 void origin(NodeSet set)
 {
-    
     var topoList = set.generateTopoList();
+    //foreach (var n in topoList)
+    //{
+    //    Console.WriteLine(n);
+    //}
     var layerList = set.generateLayer(topoList);
     set.genAlgorithmLayer(layerList);
     set.algorithm = "原始复现";

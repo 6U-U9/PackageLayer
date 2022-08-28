@@ -1,25 +1,31 @@
-namespace Refactor.Steps;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-public class BuildGraph : Step<bool, Graph>
+namespace Refactor.Steps
 {
-    public static BuildGraph Function = new();
-    public override string StepDescription
+    public class BuildGraph : Step<IEnumerable<Package>, Graph>
     {
-        get { return "Load"; }
-    }
-    public override string DetailDescription 
-    {
-        get { return "Build Graph"; }
-    }
-
-    public override Graph Process(bool input)
-    {
-        Graph graph = new Graph();
-        foreach (var package in Package.packages.Values)
+        public override string StepDescription
         {
-            graph.AddNode(package);
+            get { return "Load"; }
         }
-        graph.BuildEdges();
-        return graph;
+        public override string DetailDescription
+        {
+            get { return "Build Graph"; }
+        }
+
+        public override Graph Process(IEnumerable<Package> input)
+        {
+            Graph graph = new Graph();
+            foreach (var package in input)
+            {
+                graph.AddNode(package);
+            }
+            graph.BuildEdges();
+            return graph;
+        }
     }
 }

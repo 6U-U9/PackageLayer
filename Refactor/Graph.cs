@@ -36,12 +36,12 @@ namespace Refactor
                 {
                     foreach (var dependency in package.dependency)
                     {
-                        if(nodeSet.ContainsKey(dependency))
+                        if (nodeSet.ContainsKey(dependency) && !node.dependencies.Contains(nodeSet[dependency]) && nodeSet[dependency]!=node)
                             node.dependencies.Add(nodeSet[dependency]);
                     }
                     foreach (var dependent in package.dependent)
                     {
-                        if(nodeSet.ContainsKey(dependent))
+                        if (nodeSet.ContainsKey(dependent) && !node.dependents.Contains(nodeSet[dependent]) && nodeSet[dependent] != node)
                             node.dependents.Add(nodeSet[dependent]);
                     }
                 }

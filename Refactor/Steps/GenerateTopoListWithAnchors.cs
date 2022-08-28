@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Refactor.Steps
 {
 
-    public class GenerateTopoList : Step<Graph, List<Node>>
+    public class GenerateTopoListWithAnchors : Step<Graph, List<Node>>
     {
         public override string StepDescription
         {
@@ -20,12 +20,14 @@ namespace Refactor.Steps
         public int direction = 0; // 0: build from bottom; 1: build from top
         public int methodIndex = 0;
         public Dictionary<int, IComparer<Node>> methods;
+        public List<Package> anchors;
         public Dictionary<int, string> directionDescriptions;
         public Dictionary<int, string> methodDescriptions;
-        public GenerateTopoList(int direction = 1, int methodIndex = 0)
+        public GenerateTopoListWithAnchors(int direction = 1, int methodIndex = 0, List<Package> anchors)
         {
             this.direction = direction;
             this.methodIndex = methodIndex;
+            this.anchors = anchors;
             methods = new Dictionary<int, IComparer<Node>>()
             {
                 {0,new NodeComparerIndegreeThenIndirectDescend(direction)},
@@ -56,6 +58,8 @@ namespace Refactor.Steps
                 foreach (Node node in nodes)
                 {
                     if (node.GetOutDegree(direction) == 0)
+                        temp.Add(node);
+                    else if (node.HasIntersect(anchors))
                         temp.Add(node);
                 }
                 temp.Sort(methods[methodIndex]);
