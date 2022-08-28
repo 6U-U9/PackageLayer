@@ -1,23 +1,25 @@
 ﻿using Refactor;
-using Refactor.Steps;
+using Refactor.Procedures;
 
-Input input = new Input("mysql");
-LoadInput loadInput = new(); var p = loadInput.Process(input);
-BuildGraph buildGraph = new(); Graph g = buildGraph.Process(p);
-MergeCircleNodes mergeCircleNodes = new MergeCircleNodes(); g = mergeCircleNodes.Process(g);
-BuildIndirectEdges buildIndirectEdges = new BuildIndirectEdges(); buildIndirectEdges.Process(g);
-GenerateTopoList generateTopoList = new GenerateTopoList(); var l = generateTopoList.Process(g);
-OriginalLayer OriginalLayer = new OriginalLayer(); var result = OriginalLayer.Process(l);
-foreach (var n in l)
-{
-    Console.WriteLine(n);
-}
-Console.WriteLine(result);
-
-List<string> envs = new List<string> { "mysql", "nginx", "redis" };
+List<string> envs = new List<string> { "mysql" };//, "nginx", "redis"
 foreach (string e in envs)
 {
-    //RUN
+    Procedure origin = new Origin(e,e);
+    Procedure iterate = new Iterate(e, e);
+    Procedure improved = new Improved(e, e);
+    Procedure maxDepth = new MaxDepth(e, e);
+
+    Procedure iterateMerge = new IterateMergeByThreshold(e, e + "_merge3");
+    Procedure improvedMerge = new ImprovedMergeByThreshold(e, e + "_merge3");
+    Procedure maxDepthMerge = new MaxDepthMergeByThreshold(e, e + "_merge3");
+
+    Procedure iterateMergeTo = new IterateMergeToValue(e, e + "_merge4");
+    Procedure improvedMergeTo = new ImprovedMergeToValue(e, e + "_merge4");
+    Procedure maxDepthMergeTo = new MaxDepthMergeToValue(e, e + "_merge4");
+
+    iterateMerge.Execute();
+    improvedMerge.Execute();
+    maxDepthMerge.Execute();
 
 }
 

@@ -33,9 +33,9 @@ namespace Refactor.Steps
             {
                 if (node.GetOutDegree(direction) == 0)
                 {
-                    maxDepths[node] = 0;
                     queue.Enqueue(node);
                 }
+                maxDepths[node] = 0;
             }
             while (queue.Count > 0)
             {

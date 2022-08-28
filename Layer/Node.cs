@@ -590,6 +590,7 @@ namespace Layer
             }
             return false;
         }
+        //Node depend 和 Package 写反了
         private int countLayerNodeDepend(HashSet<Node> remain, List<Node> lastlayer)
         {
             int count = 0;
@@ -853,10 +854,11 @@ namespace Layer
             List<List<Node>> merged = new List<List<Node>>();
             merged.Add(layers[0]);
             List<Node> layer = layers[1];
+            Console.WriteLine("-------------start");
             for (int i = 2; i < layers.Count; i++)
             {
-                Console.WriteLine(countLayerNodeDepend(layers[i].ToHashSet(), layer));
-                if (countLayerNodeDepend(layers[i].ToHashSet(), layer) < dependencyThreshold)
+                Console.WriteLine(countLayerPackageDepend(layers[i].ToHashSet(), layer));
+                if (countLayerPackageDepend(layers[i].ToHashSet(), layer) < dependencyThreshold)
                 {
                     layer = layer.Concat(layers[i]).ToList();
                 }
@@ -866,6 +868,7 @@ namespace Layer
                     layer = layers[i];
                 }
             }
+            Console.WriteLine("-------------end");
             merged.Add(layer);
             return merged;
         }
@@ -973,13 +976,14 @@ namespace Layer
             buildMap();
             calculateIndirectInNodes();
             List<List<Node>> merged = new List<List<Node>>();
-
+            Console.WriteLine("-------------start");
             while (finalLayerCount < layers.Count)
             {
                 int minDependency = -1, minCount = int.MaxValue;
                 for (int i = 2; i < layers.Count; i++)
                 {
                     int count = countLayerNodeDepend(layers[i].ToHashSet(), layers[i - 1]);
+                    Console.WriteLine(count);
                     if (count < minCount)
                     {
                         minDependency = i - 1;
@@ -992,6 +996,7 @@ namespace Layer
                     layers.RemoveAt(minDependency + 1);
                 }
             }
+            Console.WriteLine("-------------end");
             return layers;
         }
         public List<List<Node>> mergeLayerv2(List<List<Node>> layers, int finalLayerCount = 4)

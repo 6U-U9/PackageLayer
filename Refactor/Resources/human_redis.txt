@@ -1,3 +1,5 @@
+sqlite -1
+zstd -1
 mpfr	2
 gmp	2
 glibc	1

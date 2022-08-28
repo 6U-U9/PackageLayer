@@ -58,6 +58,11 @@ namespace Refactor.Steps
                 }
                 layerList = nextLayerList;
             }
+            Graph full = new Graph();
+            for (int i = 0; i < layerList.Count; i++)
+                for (int j = 0; j < layerList[i].Count; j++)
+                    full.AddNode(layerList[i][j]);
+            full.BuildEdges();
             return layerList;
         }
     }

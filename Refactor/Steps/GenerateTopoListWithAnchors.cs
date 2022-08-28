@@ -23,7 +23,7 @@ namespace Refactor.Steps
         public List<Package> anchors;
         public Dictionary<int, string> directionDescriptions;
         public Dictionary<int, string> methodDescriptions;
-        public GenerateTopoListWithAnchors(int direction = 1, int methodIndex = 0, List<Package> anchors)
+        public GenerateTopoListWithAnchors(List<Package> anchors, int direction = 1, int methodIndex = 0)
         {
             this.direction = direction;
             this.methodIndex = methodIndex;

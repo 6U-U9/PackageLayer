@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Refactor.Steps
 {
-    public class MergeLayerAccordingToThresholdBasedOnNodeDependency : Step<Hierarchies, Hierarchies>
+    public class MergeLayerToCertainCount : Step<Hierarchies, Hierarchies>
     {
         public override string StepDescription
         {
@@ -14,23 +14,23 @@ namespace Refactor.Steps
         }
         public override string DetailDescription
         {
-            get { return string.Format("Merge Layer According to Node Dependency Count with Threshold {0}", threshold); }
+            get { return string.Format("Merge Layer To {0} layers According to Node Dependency Count", finalLayerCount); }
         }
-        public int threshold;
+        public int finalLayerCount = 4;
         public int graphDirection = 1;
         public int mergePreference = 0; //0: small first; 1: big first
-        public int mergeDirection = 0; //0: from bottom layer (layer zero); 1: from top layer 
+        public int mergeDirection = 0; //0: from bottom layer (layer zero); 1, from top layer 
         public int relationKind = 0; //0: node; 1: package
         public int skippedLayerCount = 0;
 
-        public MergeLayerAccordingToThresholdBasedOnNodeDependency(int threshold, int graphDirection = 1, int mergePreference = 0, int mergeDirection = 0, int relationKind = 0, int skippedLayerCount = 0)
+        public MergeLayerToCertainCount(int finalLayerCount = 4, int graphDirection = 1, int mergePreference = 0, int mergeDirection = 0, int relationKind = 0, int skippedLayerCount = 0)
         {
-            this.threshold = threshold;
+            this.finalLayerCount = finalLayerCount;
             this.graphDirection = graphDirection;
             this.mergePreference = mergePreference;
             this.mergeDirection = mergeDirection;
             this.relationKind = relationKind;
-            this.skippedLayerCount = skippedLayerCount;
+            this.skippedLayerCount = Math.Min(skippedLayerCount,finalLayerCount);
         }
         private int GetRelationCount(Layer from, Layer to)
         {
@@ -41,54 +41,56 @@ namespace Refactor.Steps
             else
                 throw new ArgumentOutOfRangeException("relation kind is not in 0 or 1");
         }
-        private bool Judge(int count)
+        public bool Judge(int count, int standard)
         {
             if (mergePreference == 0)
-                return count < threshold;
+                return count < standard;
             else if (mergePreference == 1)
-                return count > threshold;
+                return count > standard;
             else if (mergePreference == 2)
-                return count <= threshold;
+                return count <= standard;
             else if (mergePreference == 3)
-                return count >= threshold;
+                return count >= standard;
             else
                 throw new ArgumentOutOfRangeException("MergePerference not in 0 or 1");
         }
         public override Hierarchies Process(Hierarchies input)
         {
-            if (input.Count <= 1) return input;
+            Hierarchies merged = new Hierarchies(input);
             if (mergeDirection == 1)
             {
-                input.layers.Reverse();
+                merged.layers.Reverse();
                 graphDirection = 1 - graphDirection;
             }
+            Console.WriteLine("-----start");
+            while (finalLayerCount < merged.Count)
+            {
+                int layerIndex = -1, dependencyCount;
+                if (mergePreference % 2 == 0)
+                    dependencyCount = int.MaxValue;
+                else
+                    dependencyCount = -1;
 
-            Hierarchies merged = new Hierarchies();
-            for (int i = 0; i < Math.Min(skippedLayerCount, input.Count); i++)
-            {
-                merged.AddLayer(input.layers[i]);
-            }
-            if (skippedLayerCount < input.Count)
-            {
-                Layer layer = input[skippedLayerCount];
-                for (int i = skippedLayerCount + 1; i < input.Count; i++)
+                for (int i = skippedLayerCount+1; i < merged.Count; i++)
                 {
-                    if (Judge(GetRelationCount(input[i], layer)))
+                    int count = GetRelationCount(merged[i], merged[i - 1]);
+                    Console.WriteLine(count);
+                    if (Judge(count, dependencyCount))
                     {
-                        layer = layer.Concat(input[i]);
-                    }
-                    else
-                    {
-                        merged.AddLayer(layer);
-                        layer = input[i];
+                        layerIndex = i - 1;
+                        dependencyCount = count;
                     }
                 }
-                merged.AddLayer(layer);
+                if (layerIndex >= 0)
+                {
+                    merged[layerIndex] = merged[layerIndex].Concat(merged[layerIndex + 1]);
+                    merged.RemoveAt(layerIndex + 1);
+                }
             }
 
             if (mergeDirection == 1)
             {
-                input.layers.Reverse();
+                merged.layers.Reverse();
                 graphDirection = 1 - graphDirection;
             }
             return merged;

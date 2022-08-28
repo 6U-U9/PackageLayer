@@ -8,7 +8,7 @@ string env = "mysql";
 List<string> exclude = new List<string> { };
 List<string> excludeIn = new List<string> { };
 List<string> excludeOut = new List<string> { };
-string output_prefix = "circlebreak_human0_-systemd-coreutils";
+string output_prefix = "layer_merge_threshold";
 string excel = output_prefix+"_"+env+".xlsx";
 //Console.WriteLine("0：原始算法；1：迭代分层；2：改进层间依赖；3：最大深度");
 //string? input = Console.ReadLine();
@@ -165,8 +165,8 @@ void iterate(NodeSet set)
         }
         layerList = nextLayerList;
     }
-    //layerList = set.mergeLayer(layerList, set.nodeSet.Values.ToHashSet().Count / 2);
-    layerList = set.mergeLayerv2WithoutZero(layerList);
+    layerList = set.mergeLayerWithoutZero(layerList, set.nodeSet.Values.ToHashSet().Count / 2);
+    //layerList = set.mergeLayerv2WithoutZero(layerList);
     //layerList = set.mergeLayerv2Max(layerList);
 
     set.genAlgorithmLayer(layerList);
@@ -183,7 +183,8 @@ void improved(NodeSet set)
     var topoList = set.generateTopoList(set.nodeSet.Values.ToHashSet());
     //var testIn = set.generateLayerIn(topoList);
     var layerList = set.generateNewLayers(topoList);
-    layerList = set.mergeLayerv2WithoutZero(layerList);
+    layerList = set.mergeLayerWithoutZero(layerList, set.nodeSet.Values.ToHashSet().Count / 2);
+    //layerList = set.mergeLayerv2WithoutZero(layerList);
     //layerList = set.mergeLayerv2Max(layerList);
 
     set.genAlgorithmLayer(layerList);
@@ -198,11 +199,12 @@ void improved(NodeSet set)
 void MaxDepth(NodeSet set)
 {
     var layerList = set.generateLayerBasedMaxDepth();
-    layerList = set.mergeLayerv2WithoutZero(layerList);
+    layerList = set.mergeLayerWithoutZero(layerList, set.nodeSet.Values.ToHashSet().Count / 2);
+    //layerList = set.mergeLayerv2WithoutZero(layerList);
     //layerList = set.mergeLayerv2Max(layerList);
     //set.relayerCirclePackage(layerList);
 
-    set.genAlgorithmLayerV2(layerList);
+    set.genAlgorithmLayer(layerList);
     set.algorithm = "最大深度";
     set.layerList = layerList;
     Excel.Output(excel, set);

@@ -18,6 +18,7 @@ namespace Refactor
         public Input(string environment)
         {
             this.environment = environment;
+            Package.packages.Clear();
             ReadDependencies();
             ReadHumanLayers();
         }

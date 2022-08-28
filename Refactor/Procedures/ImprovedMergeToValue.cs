@@ -7,25 +7,26 @@ using System.Threading.Tasks;
 
 namespace Refactor.Procedures
 {
-    public class Origin : Procedure
+    public class ImprovedMergeToValue : Procedure
     {
         public string environment;
         public int direction;
         public string filepath;
-        public string sheetname = "原始算法";
+        public string sheetname;
 
         LoadInput loadInput;
         BuildGraph buildGraph;
         MergeCircleNodes mergeCircleNodes;
-        BuildIndirectEdges buildIndirectEdges; 
-        GenerateTopoList generateTopoList; 
-        OriginalLayer originalLayer;
+        BuildIndirectEdges buildIndirectEdges;
+        GenerateTopoList generateTopoList;
+        ImprovedLayer improvedLayer;
+        MergeLayerToCertainCount mergeLayer;
 
-        public Origin(string environment,string outputPath)
+        public ImprovedMergeToValue(string environment, string outputPath)
         {
             this.environment = environment;
             this.filepath = outputPath + ".xlsx";
-            this.sheetname = "原始算法";
+            this.sheetname = "改进算法";
 
             int length = -1;
             int direction = 1;
@@ -35,8 +36,9 @@ namespace Refactor.Procedures
             buildGraph = new BuildGraph();
             mergeCircleNodes = new MergeCircleNodes();
             buildIndirectEdges = new BuildIndirectEdges(length);
-            generateTopoList = new GenerateTopoList(direction,methodIndex);
-            originalLayer = new OriginalLayer(direction);
+            generateTopoList = new GenerateTopoList(direction, methodIndex);
+            improvedLayer = new ImprovedLayer(direction);
+            mergeLayer = new MergeLayerToCertainCount(4, direction, 0, 0, 0, 1);
         }
         public override List<string> Description()
         {
@@ -47,7 +49,8 @@ namespace Refactor.Procedures
                 mergeCircleNodes.ToString(),
                 buildIndirectEdges.ToString(),
                 generateTopoList.ToString(),
-                originalLayer.ToString(),
+                improvedLayer.ToString(),
+                mergeLayer.ToString(),
             };
             return description;
         }
@@ -60,8 +63,9 @@ namespace Refactor.Procedures
             Graph mergedGraph = mergeCircleNodes.Process(graph);
             buildIndirectEdges.Process(mergedGraph);
             List<Node> topolist = generateTopoList.Process(mergedGraph);
-            Hierarchies hierarchies = originalLayer.Process(topolist);
-            Output.HierarchiesOutput(filepath, sheetname, Description(), hierarchies);
+            Hierarchies hierarchies = improvedLayer.Process(topolist);
+            Hierarchies mergedhierarchies = mergeLayer.Process(hierarchies);
+            Output.HierarchiesOutput(filepath, sheetname, Description(), mergedhierarchies);
         }
     }
 }

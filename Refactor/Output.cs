@@ -64,7 +64,7 @@ namespace Refactor
                     worksheet.Cells[1, 1].Value = "包名";
                     worksheet.Cells[1, 2].Value = "算法分层层数";
                     worksheet.Cells[1, 3].Value = "人工分层层数";
-                    worksheet.Cells[1, 3].Value = "相同";
+                    worksheet.Cells[1, 4].Value = "相同";
                     int count = 2;
                     for (int i = 0; i < hierarchies.Count; i++)
                     {
@@ -74,7 +74,7 @@ namespace Refactor
                             {
                                 worksheet.Cells[count, 1].Value = package.ToString();
                                 worksheet.Cells[count, 2].Value = i + 1;
-                                worksheet.Cells[count, 3].Value = package.human == null ? "null" : package.human;
+                                worksheet.Cells[count, 3].Value = package.human == -1 ? "null" : package.human;
                                 worksheet.Cells[count, 4].Formula = String.Format("=IF(INT(B{0})=INT(C{1}),\"yes\",\"no\")", count, count);
                                 count++;
                             }
@@ -103,7 +103,7 @@ namespace Refactor
                         {
                             foreach (Package package in hierarchies[i][j].packages)
                             {
-                                worksheet.Cells[count, i + 1].Value = package.human == null ? "null" : package.human;
+                                worksheet.Cells[count, i + 1].Value = package.human == -1 ? "null" : package.human;
                                 count++;
                             }
                         }

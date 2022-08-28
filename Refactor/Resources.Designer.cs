@@ -172,7 +172,9 @@ namespace Refactor {
         }
         
         /// <summary>
-        ///   查找类似 mpfr	2
+        ///   查找类似 sqlite -1
+        ///zstd -1
+        ///mpfr	2
         ///gmp	2
         ///glibc	1
         ///basesystem	1
@@ -217,8 +219,7 @@ namespace Refactor {
         ///attr	2
         ///libcap	2
         ///libsigsegv	2
-        ///pcre	2
-        ///anolis-relea [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         internal static string human_redis {
             get {

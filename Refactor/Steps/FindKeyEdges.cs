@@ -39,13 +39,12 @@ namespace Refactor.Steps
             foreach (Package package in input)
             {
                 Console.WriteLine("----" + package.ToString() + "----");
-                dfs_search_circle_count(package, package);
+                DfsSearchCircleCount(package, package);
                 started[package] = true;
             }
         }
         private void DfsSearchCircleCount(Package package, Package start)
         {
-            
             visited[package] = true;
             for (int i = 0; i < package.dependency.Count; i++)
             {
@@ -55,7 +54,7 @@ namespace Refactor.Steps
                 if (visited[next] == false && started[next] == false)
                 {
                     forward[next] = package;
-                    dfs_search_circle_count(next, start);
+                    DfsSearchCircleCount(next, start);
                 }
                 else if (next == start)
                 {
@@ -79,7 +78,7 @@ namespace Refactor.Steps
         public List<(Package, Package, int)> BuildEdges(List<Package> input)
         {
             List<(Package, Package, int)> edges = new();
-            dfs_circle_count(input);
+            DfsCircleCount(input);
             foreach (var package in input)
             {
                 foreach (var dependency in package.dependency)
