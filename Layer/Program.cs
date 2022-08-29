@@ -8,7 +8,7 @@ string env = "mysql";
 List<string> exclude = new List<string> { };
 List<string> excludeIn = new List<string> { };
 List<string> excludeOut = new List<string> { };
-string output_prefix = "layer_merge_threshold";
+string output_prefix = "single_edge_merge_threshold";
 string excel = output_prefix+"_"+env+".xlsx";
 //Console.WriteLine("0：原始算法；1：迭代分层；2：改进层间依赖；3：最大深度");
 //string? input = Console.ReadLine();
@@ -97,7 +97,7 @@ var temp = set.humanLayers.Keys.Except(set.packages);
 
 //set.dfs_circle_count();
 //set.buildEdgeSet();
-//Console.WriteLine(set.getNode("glibc").dependency.Remove(new Package("libselinux")));
+Console.WriteLine(set.getNode("glibc").dependency.Remove(new Package("libselinux")));
 //set.removeKeyEdges(60000);
 
 # region Output ciecle edges count
@@ -165,8 +165,8 @@ void iterate(NodeSet set)
         }
         layerList = nextLayerList;
     }
-    layerList = set.mergeLayerWithoutZero(layerList, set.nodeSet.Values.ToHashSet().Count / 2);
-    //layerList = set.mergeLayerv2WithoutZero(layerList);
+    //layerList = set.mergeLayerWithoutZero(layerList, set.nodeSet.Values.ToHashSet().Count / 2);
+    layerList = set.mergeLayerv2WithoutZero(layerList);
     //layerList = set.mergeLayerv2Max(layerList);
 
     set.genAlgorithmLayer(layerList);
@@ -183,8 +183,8 @@ void improved(NodeSet set)
     var topoList = set.generateTopoList(set.nodeSet.Values.ToHashSet());
     //var testIn = set.generateLayerIn(topoList);
     var layerList = set.generateNewLayers(topoList);
-    layerList = set.mergeLayerWithoutZero(layerList, set.nodeSet.Values.ToHashSet().Count / 2);
-    //layerList = set.mergeLayerv2WithoutZero(layerList);
+    //layerList = set.mergeLayerWithoutZero(layerList, set.nodeSet.Values.ToHashSet().Count / 2);
+    layerList = set.mergeLayerv2WithoutZero(layerList);
     //layerList = set.mergeLayerv2Max(layerList);
 
     set.genAlgorithmLayer(layerList);
@@ -199,8 +199,8 @@ void improved(NodeSet set)
 void MaxDepth(NodeSet set)
 {
     var layerList = set.generateLayerBasedMaxDepth();
-    layerList = set.mergeLayerWithoutZero(layerList, set.nodeSet.Values.ToHashSet().Count / 2);
-    //layerList = set.mergeLayerv2WithoutZero(layerList);
+    //layerList = set.mergeLayerWithoutZero(layerList, set.nodeSet.Values.ToHashSet().Count / 2);
+    layerList = set.mergeLayerv2WithoutZero(layerList);
     //layerList = set.mergeLayerv2Max(layerList);
     //set.relayerCirclePackage(layerList);
 

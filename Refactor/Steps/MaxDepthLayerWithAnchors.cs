@@ -20,12 +20,14 @@ namespace Refactor.Steps
 
         public int direction = 0; // 0: build from bottom; 1: build from top
         public List<Package> anchors;
+        private List<string> anchorNames;
         private Dictionary<Node,int> maxDepths = new Dictionary<Node,int>();
 
-        public MaxDepthLayerWithAnchors(List<Package> anchors, int direction = 1)
+        public MaxDepthLayerWithAnchors(List<string> anchors, int direction = 1)
         {
             this.direction = direction;
-            this.anchors = anchors;
+            this.anchors = new List<Package>();
+            this.anchorNames = anchors;
         }
         private int calculateNodeMaxDepth(Graph input)
         {
@@ -62,6 +64,11 @@ namespace Refactor.Steps
         }
         public override Hierarchies Process(Graph input)
         {
+            foreach (string name in anchorNames)
+            {
+                this.anchors.Add(Package.Get(name));
+            }
+
             int maxDepth = calculateNodeMaxDepth(input);
             List<Layer> layers = new List<Layer>();
             List<Node> nodes = input.nodeSet.Values.ToHashSet().ToList();

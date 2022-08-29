@@ -976,14 +976,14 @@ namespace Layer
             buildMap();
             calculateIndirectInNodes();
             List<List<Node>> merged = new List<List<Node>>();
-            Console.WriteLine("-------------start");
+            //Console.WriteLine("-------------start");
             while (finalLayerCount < layers.Count)
             {
                 int minDependency = -1, minCount = int.MaxValue;
                 for (int i = 2; i < layers.Count; i++)
                 {
                     int count = countLayerNodeDepend(layers[i].ToHashSet(), layers[i - 1]);
-                    Console.WriteLine(count);
+                    //Console.WriteLine(count);
                     if (count < minCount)
                     {
                         minDependency = i - 1;
@@ -996,7 +996,7 @@ namespace Layer
                     layers.RemoveAt(minDependency + 1);
                 }
             }
-            Console.WriteLine("-------------end");
+            //Console.WriteLine("-------------end");
             return layers;
         }
         public List<List<Node>> mergeLayerv2(List<List<Node>> layers, int finalLayerCount = 4)

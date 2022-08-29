@@ -17,11 +17,20 @@ foreach (string e in envs)
     Procedure iterateMergeTo = new IterateMergeToValue(e, e + "_merge4");
     Procedure improvedMergeTo = new ImprovedMergeToValue(e, e + "_merge4");
     Procedure maxDepthMergeTo = new MaxDepthMergeToValue(e, e + "_merge4");
-    
+
+    Procedure iterateMergeToAnchor = new IterateMergeToValueWithAnchors(e, e + "_merge4_anchor");
+    Procedure improvedMergeToAnchor = new ImprovedMergeToValueWithAnchors(e, e + "_merge4_anchor");
+    Procedure maxDepthMergeToAnchor = new MaxDepthMergeToValueWithAnchors(e, e + "_merge4_anchor");
+
+    Procedure iterateMergeRemoveEdges = new IterateMergeToValueRemoveEdges(e, e + "_merge4_remove_edges");
+    Procedure improvedMergeRemoveEdges = new ImprovedMergeToValueRemoveEdges(e, e + "_merge4_remove_edges");
+    Procedure maxDepthMergeRemoveEdges = new MaxDepthMergeToValueRemoveEdges(e, e + "_merge4_remove_edges");
+
     Procedure findKeyEdges = new KeyEdges(e, e);
 
-    findKeyEdges.Execute();
-
+    iterateMergeRemoveEdges.Execute();
+    improvedMergeRemoveEdges.Execute();
+    maxDepthMergeRemoveEdges.Execute();
 }
 
 Console.WriteLine("FUCK FUCK FUCK");

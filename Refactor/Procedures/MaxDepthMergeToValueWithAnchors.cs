@@ -27,16 +27,16 @@ namespace Refactor.Procedures
             this.sheetname = "最大深度算法";
 
             int direction = 1;
-            List<Package> anchors = new List<Package>()
+            List<string> anchors = new List<string>()
             {
-                Package.Get("glibc"), 
-                Package.Get("basesystem"), 
-                Package.Get("filesystem"), 
-                Package.Get("setup"), 
-                Package.Get("anolis-release"), 
-                Package.Get("coreutils"), 
-                Package.Get("gcc"), 
-                Package.Get("systemd"),
+                "glibc", 
+                "basesystem", 
+                "filesystem", 
+                "setup", 
+                "anolis-release", 
+                "coreutils", 
+                "gcc", 
+                "systemd",
             };
 
             loadInput = new LoadInput();

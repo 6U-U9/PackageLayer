@@ -19,7 +19,7 @@ namespace Refactor.Procedures
         MergeCircleNodes mergeCircleNodes;
         BuildIndirectEdges buildIndirectEdges;
         GenerateTopoListWithAnchors generateTopoList;
-        ImprovedLayer improvedLayer;
+        ImprovedLayerWithAnchors improvedLayer;
         MergeLayerToCertainCount mergeLayer;
 
         public ImprovedMergeToValueWithAnchors(string environment, string outputPath)
@@ -31,16 +31,16 @@ namespace Refactor.Procedures
             int length = -1;
             int direction = 1;
             int methodIndex = 0;
-            List<Package> anchors = new List<Package>()
+            List<string> anchors = new List<string>()
             {
-                Package.Get("glibc"), 
-                Package.Get("basesystem"), 
-                Package.Get("filesystem"), 
-                Package.Get("setup"), 
-                Package.Get("anolis-release"), 
-                Package.Get("coreutils"), 
-                Package.Get("gcc"), 
-                Package.Get("systemd"),
+                "glibc", 
+                "basesystem", 
+                "filesystem", 
+                "setup", 
+                "anolis-release", 
+                "coreutils", 
+                "gcc", 
+                "systemd",
             };
 
             loadInput = new LoadInput();
@@ -48,7 +48,7 @@ namespace Refactor.Procedures
             mergeCircleNodes = new MergeCircleNodes();
             buildIndirectEdges = new BuildIndirectEdges(length);
             generateTopoList = new GenerateTopoListWithAnchors(anchors, direction, methodIndex);
-            improvedLayer = new ImprovedLayer(direction);
+            improvedLayer = new ImprovedLayerWithAnchors(anchors, direction);
             mergeLayer = new MergeLayerToCertainCount(4, direction, 0, 0, 0, 1);
         }
         public override List<string> Description()

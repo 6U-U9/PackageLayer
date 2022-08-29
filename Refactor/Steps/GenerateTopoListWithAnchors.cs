@@ -22,13 +22,16 @@ namespace Refactor.Steps
         public int methodIndex = 0;
         public Dictionary<int, IComparer<Node>> methods;
         public List<Package> anchors;
+        private List<string> anchorNames;
         public Dictionary<int, string> directionDescriptions;
         public Dictionary<int, string> methodDescriptions;
-        public GenerateTopoListWithAnchors(List<Package> anchors, int direction = 1, int methodIndex = 0)
+        public GenerateTopoListWithAnchors(List<string> anchors, int direction = 1, int methodIndex = 0)
         {
             this.direction = direction;
             this.methodIndex = methodIndex;
-            this.anchors = anchors;
+            this.anchors = new List<Package>();
+            this.anchorNames = anchors;
+            
             methods = new Dictionary<int, IComparer<Node>>()
             {
                 {0,new NodeComparerIndegreeThenIndirectDescend(direction)},
@@ -51,6 +54,10 @@ namespace Refactor.Steps
         }
         public override List<Node> Process(Graph input)
         {
+            foreach (string name in anchorNames)
+            {
+                this.anchors.Add(Package.Get(name));
+            }
             List<Node> list = new List<Node>();
             HashSet<Node> nodes = input.nodeSet.Values.ToHashSet();
             while (nodes.Count > 0)

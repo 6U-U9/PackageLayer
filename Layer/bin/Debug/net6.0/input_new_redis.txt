@@ -6,7 +6,6 @@ digraph MyPicture {
 	glibc
 	glibc -> basesystem
 	glibc -> bash
-	glibc -> libselinux
 	glibc -> tzdata
 	gmp
 	gmp -> glibc

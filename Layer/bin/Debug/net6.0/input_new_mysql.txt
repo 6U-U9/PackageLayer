@@ -9,7 +9,6 @@ digraph MyPicture {
 	glibc
 	glibc -> basesystem
 	glibc -> bash
-	glibc -> libselinux
 	glibc -> tzdata
 	python3
 	python3 -> bash
