@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Refactor
+﻿namespace Refactor.Core
 {
     public class Node
     {
@@ -85,6 +79,34 @@ namespace Refactor
                 return dependencies;
             else
                 throw new ArgumentOutOfRangeException(String.Format("direction is {0}, not 0 or 1", direction));
+        }
+        public List<Package> GetInPackages(int direction)
+        {
+            List<Package> packages = new List<Package>();
+            foreach (Package p in this.packages)
+            {
+                if (direction == 0) // Bottom -> Up
+                    packages.AddRange(p.dependency);
+                else if (direction == 1)
+                    packages.AddRange(p.dependent);
+                else
+                    throw new ArgumentOutOfRangeException(String.Format("direction is {0}, not 0 or 1", direction));
+            }
+            return packages;
+        }
+        public List<Package> GetOutPackages(int direction)
+        {
+            List<Package> packages = new List<Package>();
+            foreach (Package p in this.packages)
+            {
+                if (direction == 0) // Bottom -> Up
+                    packages.AddRange(p.dependent);
+                else if (direction == 1)
+                    packages.AddRange(p.dependency);
+                else
+                    throw new ArgumentOutOfRangeException(String.Format("direction is {0}, not 0 or 1", direction));
+            }
+            return packages;
         }
         public int GetIndirectInDegree(int direction)
         {

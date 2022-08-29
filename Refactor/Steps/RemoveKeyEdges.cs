@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Refactor.Core;
 
 namespace Refactor.Steps
 {
+    [Obsolete]
     public class RemoveKeyEdges : Step<List<List<Package>>, bool>
     {
         public override string StepDescription

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Refactor.Core;
 
 namespace Refactor.Steps
 {
@@ -70,6 +71,9 @@ namespace Refactor.Steps
                 }
                 layers.Add(layer);
             }
+
+            if (direction == 0)
+                layers.Reverse();
             return layers;
         }
     }

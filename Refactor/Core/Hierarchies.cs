@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Refactor
+﻿namespace Refactor.Core
 {
     public class Hierarchies
     {
@@ -37,6 +31,10 @@ namespace Refactor
         public void AddLayer(Layer layer)
         {
             layers.Add(layer);
+        }
+        public void Reverse()
+        {
+            layers.Reverse();
         }
         public override string ToString()
         {

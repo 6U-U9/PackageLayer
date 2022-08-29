@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Refactor.Core;
 
 namespace Refactor.Procedures
 {
     public class Origin : Procedure
     {
         public string environment;
-        public int direction;
         public string filepath;
         public string sheetname = "原始算法";
 

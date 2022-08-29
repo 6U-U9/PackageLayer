@@ -1,7 +1,8 @@
 ﻿using Refactor;
+using Refactor.Core;
 using Refactor.Procedures;
 
-List<string> envs = new List<string> { "mysql" };//, "nginx", "redis"
+List<string> envs = new List<string> {"mysql" , "nginx", "redis"};//
 foreach (string e in envs)
 {
     Procedure origin = new Origin(e,e);
@@ -16,10 +17,10 @@ foreach (string e in envs)
     Procedure iterateMergeTo = new IterateMergeToValue(e, e + "_merge4");
     Procedure improvedMergeTo = new ImprovedMergeToValue(e, e + "_merge4");
     Procedure maxDepthMergeTo = new MaxDepthMergeToValue(e, e + "_merge4");
+    
+    Procedure findKeyEdges = new KeyEdges(e, e);
 
-    iterateMerge.Execute();
-    improvedMerge.Execute();
-    maxDepthMerge.Execute();
+    findKeyEdges.Execute();
 
 }
 

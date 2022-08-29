@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Refactor.Core;
 
 namespace Refactor.Steps
 {
@@ -30,7 +31,7 @@ namespace Refactor.Steps
             foreach (Package package in input)
             {
                 started[package] = false;
-                visited[package] = true;
+                visited[package] = false;
                 forward[package] = Package.NullPackage;
                 circleEdgeCount[package] = new Dictionary<Package, int>();
                 foreach (Package dependency in package.dependency)
@@ -38,7 +39,7 @@ namespace Refactor.Steps
             }
             foreach (Package package in input)
             {
-                Console.WriteLine("----" + package.ToString() + "----");
+                //Console.WriteLine("----" + package.ToString() + "----");
                 DfsSearchCircleCount(package, package);
                 started[package] = true;
             }

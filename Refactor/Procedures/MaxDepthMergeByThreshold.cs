@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Refactor.Core;
 
 namespace Refactor.Procedures
 {
     public class MaxDepthMergeByThreshold : Procedure
     {
         public string environment;
-        public int direction;
         public string filepath;
         public string sheetname;
 
@@ -32,7 +32,7 @@ namespace Refactor.Procedures
             buildGraph = new BuildGraph();
             mergeCircleNodes = new MergeCircleNodes();
             maxDepthLayer = new MaxDepthLayer(direction);
-            mergeLayer = new MergeLayerByThreshold(0, direction, 0, 0, 0, 1);
+            mergeLayer = new MergeLayerByThreshold(0, direction, 2, 0, 1, 1);
         }
         public override List<string> Description()
         {
@@ -53,8 +53,8 @@ namespace Refactor.Procedures
             IEnumerable<Package> packages = loadInput.Process(input);
             Graph graph = buildGraph.Process(packages);
             Graph mergedGraph = mergeCircleNodes.Process(graph);
+            mergeLayer.threshold = mergedGraph.nodeSet.Values.ToHashSet().Count() / 2;
             Hierarchies hierarchies = maxDepthLayer.Process(mergedGraph);
-            mergeLayer.threshold = graph.nodeSet.Values.ToHashSet().Count() / 2;
             Hierarchies mergedhierarchies = mergeLayer.Process(hierarchies);
             Output.HierarchiesOutput(filepath, sheetname, Description(), mergedhierarchies);
         }

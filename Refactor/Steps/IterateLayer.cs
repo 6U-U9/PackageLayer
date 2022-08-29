@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Refactor.Core;
 
 namespace Refactor.Steps
 {
@@ -63,6 +64,9 @@ namespace Refactor.Steps
                 for (int j = 0; j < layerList[i].Count; j++)
                     full.AddNode(layerList[i][j]);
             full.BuildEdges();
+            
+            if (direction == 0)
+                layerList.Reverse();
             return layerList;
         }
     }

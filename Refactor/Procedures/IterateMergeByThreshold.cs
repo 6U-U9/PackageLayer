@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Refactor.Core;
 
 namespace Refactor.Procedures
 {
     public class IterateMergeByThreshold : Procedure
     {
         public string environment;
-        public int direction;
         public string filepath;
         public string sheetname;
 
@@ -38,7 +38,7 @@ namespace Refactor.Procedures
             buildIndirectEdges = new BuildIndirectEdges(length);
             generateTopoList = new GenerateTopoList(direction, methodIndex);
             iterateLayer = new IterateLayer(direction);
-            mergeLayer = new MergeLayerByThreshold(0, direction, 0, 0, 1, 1);
+            mergeLayer = new MergeLayerByThreshold(0, direction, 2, 0, 1, 1);
         }
         public override List<string> Description()
         {
@@ -61,10 +61,10 @@ namespace Refactor.Procedures
             IEnumerable<Package> packages = loadInput.Process(input);
             Graph graph = buildGraph.Process(packages);
             Graph mergedGraph = mergeCircleNodes.Process(graph);
+            mergeLayer.threshold = mergedGraph.nodeSet.Values.ToHashSet().Count() / 2;
             buildIndirectEdges.Process(mergedGraph);
             List<Node> topolist = generateTopoList.Process(mergedGraph);
             Hierarchies hierarchies = iterateLayer.Process(topolist);
-            mergeLayer.threshold = graph.nodeSet.Values.ToHashSet().Count() / 2;
             Hierarchies mergedhierarchies = mergeLayer.Process(hierarchies);
             Output.HierarchiesOutput(filepath, sheetname, Description(), mergedhierarchies);
         }

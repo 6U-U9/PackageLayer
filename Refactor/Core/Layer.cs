@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Refactor
+﻿namespace Refactor.Core
 {
     public class Layer
     {
@@ -127,12 +121,10 @@ namespace Refactor
             int count = 0;
             foreach (Node node in this.nodes)
             {
-                List<Node> outEdges = node.GetOutEdges(direction);
-
-                foreach (Node outNode in outEdges)
+                foreach (Package package in node.GetOutPackages(direction))
                 {
-                    if (nodes.Contains(outNode))
-                        count += node.packages.Count;
+                    if (nodes.Contains(package))
+                        count++;
                 }
             }
             return count;
@@ -142,12 +134,10 @@ namespace Refactor
             int count = 0;
             foreach (Node node in this.nodes)
             {
-                List<Node> inEdges = node.GetInEdges(direction);
-
-                foreach (Node inNode in inEdges)
+                foreach (Package package in node.GetInPackages(direction))
                 {
-                    if (nodes.Contains(inNode))
-                        count += node.packages.Count;
+                    if (nodes.Contains(package))
+                        count++;
                 }
             }
             return count;

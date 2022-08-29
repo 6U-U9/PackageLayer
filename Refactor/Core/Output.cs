@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OfficeOpenXml;
+﻿using OfficeOpenXml;
 
-namespace Refactor
+namespace Refactor.Core
 {
     public class Output
     {
@@ -109,6 +104,34 @@ namespace Refactor
                         }
                     }
                 }
+                p.Save();
+            }
+        }
+        public static void EdgesOutput(string filepath, string sheetPrefix, List<string> descriptions, List<(Package,Package,int)> output)
+        {
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using (var p = new ExcelPackage(new FileInfo(filepath)))
+            {
+                {
+                    var sheetName = sheetPrefix;
+                    var hasSheet = p.Workbook.Worksheets[sheetName];
+                    if (hasSheet != null)
+                    {
+                        p.Workbook.Worksheets.Delete(sheetName);
+                    }
+                    ExcelWorksheet worksheet = p.Workbook.Worksheets.Add(sheetName);
+                    worksheet.Cells[1, 1].Value = "边";
+                    worksheet.Cells[1, 3].Value = "环的数量";
+                    int count = 2;
+                    foreach (var edge in output)
+                    {
+                        worksheet.Cells[count, 1].Value = edge.Item1.ToString();
+                        worksheet.Cells[count, 2].Value = edge.Item2.ToString();
+                        worksheet.Cells[count, 3].Value = edge.Item3.ToString();
+                        count++;
+                    }
+                }
+
                 p.Save();
             }
         }

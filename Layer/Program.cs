@@ -140,7 +140,7 @@ void origin(NodeSet set)
     set.algorithm = "原始复现";
     set.layerList = layerList;
     Excel.Output(excel, set);
-    printLayers(layerList);
+    //printLayers(layerList);
 }
 #endregion
 
@@ -173,7 +173,7 @@ void iterate(NodeSet set)
     set.algorithm = "迭代分层";
     set.layerList = layerList;
     Excel.Output(excel, set);
-    printLayers(layerList);
+    //printLayers(layerList);
 }
 # endregion
 
@@ -191,7 +191,7 @@ void improved(NodeSet set)
     set.algorithm = "改进依赖";
     set.layerList = layerList;
     Excel.Output(excel, set);
-    printLayers(layerList);
+    //printLayers(layerList);
 }
 #endregion
 
@@ -208,7 +208,7 @@ void MaxDepth(NodeSet set)
     set.algorithm = "最大深度";
     set.layerList = layerList;
     Excel.Output(excel, set);
-    printLayers(layerList);
+    //printLayers(layerList);
 }
 #endregion
 
