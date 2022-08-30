@@ -36,3 +36,5 @@ foreach (string e in envs)
     improvedMergeWithAnchorsRemoveEdges.Execute();
     maxDepthMergeWithAnchorsRemoveEdges.Execute();
 }
+
+Console.WriteLine("Finished");
