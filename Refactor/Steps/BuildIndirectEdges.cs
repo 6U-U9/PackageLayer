@@ -17,6 +17,11 @@ namespace Refactor.Steps
         {
             get { return "Build indirect edges"; }
         }
+        public override string ChineseDescription
+        {
+            get { return $"计算间接依赖数 间接层数：{length}"; }
+        }
+
         public int length = -1; // -1 for iterate until end
         public BuildIndirectEdges(int length = -1)
         {

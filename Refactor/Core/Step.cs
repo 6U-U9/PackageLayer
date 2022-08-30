@@ -12,6 +12,11 @@ public abstract class Step<TI,TO>
         get { return ""; }
     }
 
+    public virtual string ChineseDescription
+    {
+        get { return ""; }
+    }
+
     public virtual TO Process(TI input)
     {
         throw new NotImplementedException();
@@ -19,6 +24,6 @@ public abstract class Step<TI,TO>
 
     public override string ToString()
     {
-        return StepDescription+" : "+ DetailDescription;
+        return ChineseDescription;
     }
 }

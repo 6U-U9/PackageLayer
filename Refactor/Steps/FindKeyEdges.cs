@@ -17,6 +17,11 @@ namespace Refactor.Steps
         {
             get { return "Find Key Edges of Circles"; }
         }
+        public override string ChineseDescription
+        {
+            get { return $"计算边在多少环中 关键边阈值{threshold}"; }
+        }
+
         public int threshold = 60000;
         public FindKeyEdges(int threshold)
         {

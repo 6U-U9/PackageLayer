@@ -32,6 +32,7 @@ foreach (string e in envs)
 
     Procedure findKeyEdges = new KeyEdges(e, e);
 
+    origin.Execute();
     iterateMergeWithAnchorsRemoveEdges.Execute();
     improvedMergeWithAnchorsRemoveEdges.Execute();
     maxDepthMergeWithAnchorsRemoveEdges.Execute();

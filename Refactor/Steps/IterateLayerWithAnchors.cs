@@ -13,10 +13,25 @@ namespace Refactor.Steps
         {
             get { return "Main"; }
         }
-
         public override string DetailDescription
         {
             get { return "Iterated Original Layer Algorithm"; }
+        }
+        public override string ChineseDescription
+        {
+            get
+            {
+                Dictionary<int, string> directionDescriptions;
+                directionDescriptions = new Dictionary<int, string>()
+                {
+                    {0, "Bottom - Up" },
+                    {1, "Top - Down" },
+                };
+                string s = "";
+                foreach (string name in anchorNames)
+                    s += name + ";";
+                return $"迭代算法 算法方向：{directionDescriptions[direction]} 1层锚点：{s}";
+            }
         }
 
         BuildGraph buildGraph;

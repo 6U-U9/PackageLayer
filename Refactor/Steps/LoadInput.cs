@@ -18,6 +18,13 @@ namespace Refactor.Steps
         {
             get { return "Build Packages"; }
         }
+        public override string ChineseDescription
+        {
+            get
+            {
+                return $"∂¡»° ‰»Î";
+            }
+        }
 
         public override IEnumerable<Package> Process(Input input)
         {

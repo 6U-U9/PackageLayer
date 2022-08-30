@@ -16,15 +16,55 @@ namespace Refactor.Steps
         }
         public override string DetailDescription
         {
-            get { return string.Format("Generate nodes topo list, direction :{0}, sorted by {1}", directionDescriptions[direction], methodDescriptions[methodIndex]); }
+            get
+            {
+                Dictionary<int, string> directionDescriptions;
+                Dictionary<int, string> methodDescriptions;
+                directionDescriptions = new Dictionary<int, string>()
+                {
+                    {0, "Bottom - Up" },
+                    {1, "Top - Down" },
+                };
+                methodDescriptions = new Dictionary<int, string>()
+                {
+                    {0, "First compare indegree then indirect indegree in descending order" },
+                    {1, "First compare indegree then indirect indegree in ascending order" },
+                    {2, "Compare indirect indegree in descending order" },
+                    {3, "Compare indirect indegree in ascending order" },
+                };
+                return string.Format("Generate nodes topo list, direction :{0}, sorted by {1}", directionDescriptions[direction], methodDescriptions[methodIndex]);
+            }
         }
+        public override string ChineseDescription
+        {
+            get 
+            {
+                Dictionary<int, string> directionDescriptions;
+                Dictionary<int, string> methodDescriptions;
+                directionDescriptions = new Dictionary<int, string>()
+                {
+                    {0, "Bottom - Up" },
+                    {1, "Top - Down" },
+                };
+                methodDescriptions = new Dictionary<int, string>()
+                {
+                    {0, "First compare indegree then indirect indegree in descending order" },
+                    {1, "First compare indegree then indirect indegree in ascending order" },
+                    {2, "Compare indirect indegree in descending order" },
+                    {3, "Compare indirect indegree in ascending order" },
+                };
+                string s = "";
+                foreach (string name in anchorNames)
+                    s += name + ";";
+                return $"生成拓扑序列 算法方向：{directionDescriptions[direction]} 1层锚点：{s}"; 
+            }
+        }
+
         public int direction = 0; // 0: build from bottom; 1: build from top
         public int methodIndex = 0;
         public Dictionary<int, IComparer<Node>> methods;
         public List<Package> anchors;
         private List<string> anchorNames;
-        public Dictionary<int, string> directionDescriptions;
-        public Dictionary<int, string> methodDescriptions;
         public GenerateTopoListWithAnchors(List<string> anchors, int direction = 1, int methodIndex = 0)
         {
             this.direction = direction;
@@ -38,18 +78,6 @@ namespace Refactor.Steps
                 {1,new NodeComparerIndegreeThenIndirectAscend(direction)},
                 {2,new NodeComparerIndirectIndegreeDescend(direction)},
                 {3,new NodeComparerIndegreeThenIndirectAscend(direction)},
-            };
-            directionDescriptions = new Dictionary<int, string>()
-            {
-                {0, "Bottom - Up" },
-                {1, "Top - Down" },
-            };
-            methodDescriptions = new Dictionary<int, string>()
-            {
-                {0, "First compare indegree then indirect indegree in descending order" },
-                {1, "First compare indegree then indirect indegree in ascending order" },
-                {2, "Compare indirect indegree in descending order" },
-                {3, "Compare indirect indegree in ascending order" },
             };
         }
         public override List<Node> Process(Graph input)

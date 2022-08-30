@@ -17,6 +17,20 @@ namespace Refactor.Steps
         {
             get { return string.Format("Merge Layer To {0} layers According to Node Dependency Count", finalLayerCount); }
         }
+        public override string ChineseDescription
+        {
+            get
+            {
+                Dictionary<int, string> mergePreferenceDescriptions;
+                mergePreferenceDescriptions = new Dictionary<int, string>()
+                {
+                    {0, "最小" },
+                    {1, "最大" },
+                };
+                return $"层融合 层间依赖数{mergePreferenceDescriptions[mergePreference]}优先";
+            }
+        }
+
         public int finalLayerCount = 4;
         public int graphDirection = 1;
         public int mergePreference = 0; //0: small first; 1: big first

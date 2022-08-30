@@ -18,6 +18,19 @@ namespace Refactor.Steps
         {
             get { return "Build Packages"; }
         }
+        public override string ChineseDescription
+        {
+            get
+            {
+                string ps = "";
+                foreach (string name in removePackages)
+                    ps += name + "; ";
+                string es = "";
+                foreach (var e in removeEdges)
+                    es += e.Item1+" -> "+e.Item2 + "; ";
+                return $"读取输入并移除 点：{ps} 边：{es}";
+            }
+        }
 
         public List<string> removePackages;
         public List<(string, string)> removeEdges;

@@ -13,11 +13,27 @@ namespace Refactor.Steps
         {
             get { return "Main"; }
         }
-
         public override string DetailDescription
         {
             get { return "Original Layer Algorithm"; }
         }
+        public override string ChineseDescription
+        {
+            get
+            {
+                Dictionary<int, string> directionDescriptions;
+                directionDescriptions = new Dictionary<int, string>()
+                {
+                    {0, "Bottom - Up" },
+                    {1, "Top - Down" },
+                };
+                string s = "";
+                foreach (string name in anchorNames)
+                    s += name + ";";
+                return $"原始算法方向：{directionDescriptions[direction]} 1层锚点：{s}";
+            }
+        }
+
         public int direction = 0; // 0: build from bottom; 1: build from top
         public List<Package> anchors;
         private List<string> anchorNames;

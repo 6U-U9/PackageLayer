@@ -17,6 +17,19 @@ namespace Refactor.Steps
         {
             get { return "Improved Layer Algorithm"; }
         }
+        public override string ChineseDescription
+        {
+            get
+            {
+                Dictionary<int, string> directionDescriptions;
+                directionDescriptions = new Dictionary<int, string>()
+                {
+                    {0, "Bottom - Up" },
+                    {1, "Top - Down" },
+                };
+                return $"改进算法 算法方向：{directionDescriptions[direction]}";
+            }
+        }
 
         public int direction = 0; // 0: build from bottom; 1: build from top
         public ImprovedLayer(int direction = 1)

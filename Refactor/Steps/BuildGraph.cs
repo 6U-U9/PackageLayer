@@ -17,6 +17,10 @@ namespace Refactor.Steps
         {
             get { return "Build Graph"; }
         }
+        public override string ChineseDescription
+        {
+            get { return "½¨Í¼"; }
+        }
 
         public override Graph Process(IEnumerable<Package> input)
         {

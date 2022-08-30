@@ -13,10 +13,16 @@ namespace Refactor.Steps
         {
             get { return "Modify"; }
         }
-
         public override string DetailDescription
         {
             get { return "Merge nodes in circles to one node"; }
+        }
+        public override string ChineseDescription
+        {
+            get
+            {
+                return $"深度搜索去环";
+            }
         }
 
         private Dictionary<Node,int> color = new Dictionary<Node,int>(); //0, white; 1, gray; 2, black

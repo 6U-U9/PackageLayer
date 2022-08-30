@@ -17,6 +17,22 @@ namespace Refactor.Steps
         {
             get { return string.Format("Merge Layer According to Node Dependency Count with Threshold {0}", threshold); }
         }
+        public override string ChineseDescription
+        {
+            get
+            {
+                Dictionary<int, string> mergePreferenceDescriptions;
+                mergePreferenceDescriptions = new Dictionary<int, string>()
+                {
+                    {0, "小于" },
+                    {1, "大于" },
+                    {2, "小于等于" },
+                    {3, "大于等于" },
+                };
+                return $"层融合 层间依赖数{mergePreferenceDescriptions[mergePreference]}{threshold}";
+            }
+        }
+
         public int threshold;
         public int graphDirection = 1;
         public int mergePreference = 0; //0: small first; 1: big first
