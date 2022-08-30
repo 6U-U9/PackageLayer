@@ -26,11 +26,13 @@ foreach (string e in envs)
     Procedure improvedMergeRemoveEdges = new ImprovedMergeToValueRemoveEdges(e, e + "_merge4_remove_edges");
     Procedure maxDepthMergeRemoveEdges = new MaxDepthMergeToValueRemoveEdges(e, e + "_merge4_remove_edges");
 
+    Procedure iterateMergeWithAnchorsRemoveEdges = new IterateMergeToValueWithAnchorsRemoveEdges(e, e + "_merge4_anchor_remove_edges");
+    Procedure improvedMergeWithAnchorsRemoveEdges = new ImprovedMergeToValueWithAnchorsRemoveEdges(e, e + "_merge4_anchor_remove_edges");
+    Procedure maxDepthMergeWithAnchorsRemoveEdges = new MaxDepthMergeToValueWithAnchorsRemoveEdges(e, e + "_merge4_anchor_remove_edges");
+
     Procedure findKeyEdges = new KeyEdges(e, e);
 
-    iterateMergeRemoveEdges.Execute();
-    improvedMergeRemoveEdges.Execute();
-    maxDepthMergeRemoveEdges.Execute();
+    iterateMergeWithAnchorsRemoveEdges.Execute();
+    improvedMergeWithAnchorsRemoveEdges.Execute();
+    maxDepthMergeWithAnchorsRemoveEdges.Execute();
 }
-
-Console.WriteLine("FUCK FUCK FUCK");

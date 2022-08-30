@@ -366,5 +366,189 @@ namespace Refactor {
                 return ResourceManager.GetString("input_test", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   查找类似 perl-PathTools -&gt; glibc
+        ///perl-Socket -&gt; glibc
+        ///perl-Scalar-List-Utils -&gt; glibc
+        ///perl-Unicode-Normalize -&gt; glibc
+        ///perl-threads -&gt; glibc
+        ///perl-threads-shared -&gt; glibc
+        ///perl-Encode -&gt; glibc
+        ///perl-MIME-Base64 -&gt; glibc
+        ///perl-Storable -&gt; glibc
+        ///groff -&gt; gcc
+        ///groff -&gt; glibc
+        ///sed -&gt; glibc
+        ///texinfo -&gt; glibc
+        ///libtirpc -&gt; glibc
+        ///gawk -&gt; filesystem
+        ///gawk -&gt; glibc
+        ///libunistring -&gt; glibc
+        ///json-c -&gt; glibc
+        ///libedit -&gt; glibc
+        /// 的本地化字符串。
+        /// </summary>
+        internal static string leap_mysql {
+            get {
+                return ResourceManager.GetString("leap_mysql", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 sed -&gt; glibc
+        ///texinfo -&gt; glibc
+        ///libtirpc -&gt; glibc
+        ///gawk -&gt; filesystem
+        ///gawk -&gt; glibc
+        ///libunistring -&gt; glibc
+        ///json-c -&gt; glibc
+        ///libXau -&gt; glibc
+        ///libxcb -&gt; glibc
+        ///libX11 -&gt; glibc
+        ///jbigkit -&gt; glibc
+        ///libwebp -&gt; glibc
+        ///libtiff -&gt; gcc
+        ///libtiff -&gt; glibc
+        ///libjpeg-turbo -&gt; glibc
+        ///libpng -&gt; glibc
+        ///freetype -&gt; bash
+        ///freetype -&gt; glibc
+        ///freetype -&gt; bzip2
+        ///freetype -&gt; zlib
+        ///fontconfig -&gt; bash
+        ///fontconfig -&gt; glibc
+        ///fontconfig -&gt; coreutils
+        ///fontconfig -&gt; grep
+        ///fontconfig -&gt; expat
+        ///fontconfig -&gt; util-linux
+        ///libXpm -&gt; glibc
+        /// [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        internal static string leap_nginx {
+            get {
+                return ResourceManager.GetString("leap_nginx", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 libtirpc -&gt; glibc
+        ///gawk -&gt; filesystem
+        ///gawk -&gt; glibc
+        ///sed -&gt; glibc
+        ///texinfo -&gt; glibc
+        ///libutempter -&gt; glibc
+        ///libunistring -&gt; glibc
+        ///json-c -&gt; glibc
+        ///redis -&gt; glibc
+        ///redis -&gt; systemd
+        /// 的本地化字符串。
+        /// </summary>
+        internal static string leap_redis {
+            get {
+                return ResourceManager.GetString("leap_redis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 perl -&gt; perl-Carp
+        ///perl -&gt; perl-Exporter
+        ///perl -&gt; perl-PathTools
+        ///perl -&gt; perl-Socket
+        ///perl -&gt; perl-File-Path
+        ///perl -&gt; perl-Scalar-List-Utils
+        ///perl -&gt; perl-Text-Tabs+Wrap
+        ///perl -&gt; perl-Unicode-Normalize
+        ///perl -&gt; perl-constant
+        ///perl -&gt; perl-parent
+        ///perl -&gt; perl-threads
+        ///perl -&gt; perl-threads-shared
+        ///perl -&gt; perl-Encode
+        ///glibc -&gt; bash
+        ///glibc -&gt; libselinux
+        ///glibc -&gt; tzdata
+        ///gcc -&gt; bash
+        ///gcc -&gt; texinfo
+        ///python3 -&gt; python-setuptools
+        ///python3 -&gt; libtirpc
+        ///python-pip -&gt; python-setuptools
+        ///libnsl2 -&gt; libtirpc
+        ///readl [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        internal static string reverse_mysql {
+            get {
+                return ResourceManager.GetString("reverse_mysql", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 ca-certificates -&gt; sed
+        ///coreutils -&gt; acl
+        ///coreutils -&gt; attr
+        ///coreutils -&gt; libcap
+        ///coreutils -&gt; openssl
+        ///coreutils -&gt; gmp
+        ///coreutils -&gt; libselinux
+        ///coreutils -&gt; ncurses
+        ///coreutils -&gt; bash
+        ///coreutils -&gt; texinfo
+        ///grep -&gt; texinfo
+        ///glibc -&gt; bash
+        ///glibc -&gt; libselinux
+        ///glibc -&gt; tzdata
+        ///filesystem -&gt; bash
+        ///python3 -&gt; libtirpc
+        ///libnsl2 -&gt; libtirpc
+        ///readline -&gt; texinfo
+        ///krb5 -&gt; gawk
+        ///krb5 -&gt; sed
+        ///pam -&gt; libtirpc
+        ///systemd -&gt; bash
+        ///systemd -&gt; shadow-utils
+        ///systemd -&gt; acl
+        ///systemd -&gt; dbus
+        ///systemd -&gt; grep
+        ///systemd -&gt; au [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        internal static string reverse_nginx {
+            get {
+                return ResourceManager.GetString("reverse_nginx", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 glibc -&gt; bash
+        ///glibc -&gt; libselinux
+        ///glibc -&gt; tzdata
+        ///python3 -&gt; libtirpc
+        ///libnsl2 -&gt; libtirpc
+        ///readline -&gt; texinfo
+        ///krb5 -&gt; gawk
+        ///krb5 -&gt; sed
+        ///coreutils -&gt; acl
+        ///coreutils -&gt; attr
+        ///coreutils -&gt; libcap
+        ///coreutils -&gt; openssl
+        ///coreutils -&gt; gmp
+        ///coreutils -&gt; libselinux
+        ///coreutils -&gt; ncurses
+        ///coreutils -&gt; bash
+        ///coreutils -&gt; texinfo
+        ///grep -&gt; texinfo
+        ///filesystem -&gt; bash
+        ///gcc -&gt; bash
+        ///gcc -&gt; texinfo
+        ///util-linux -&gt; libutempter
+        ///pam -&gt; libtirpc
+        ///systemd -&gt; bash
+        ///systemd -&gt; shadow-utils
+        ///systemd -&gt; acl
+        ///systemd -&gt; dbus [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        internal static string reverse_redis {
+            get {
+                return ResourceManager.GetString("reverse_redis", resourceCulture);
+            }
+        }
     }
 }

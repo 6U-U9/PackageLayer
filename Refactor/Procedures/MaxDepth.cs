@@ -14,6 +14,7 @@ namespace Refactor.Procedures
         public string filepath;
         public string sheetname;
 
+        Input input;
         LoadInput loadInput;
         BuildGraph buildGraph;
         MergeCircleNodes mergeCircleNodes;
@@ -27,6 +28,7 @@ namespace Refactor.Procedures
 
             int direction = 1;
 
+            input = new Input(environment);
             loadInput = new LoadInput();
             buildGraph = new BuildGraph();
             mergeCircleNodes = new MergeCircleNodes();
@@ -46,7 +48,6 @@ namespace Refactor.Procedures
 
         public override void Execute()
         {
-            Input input = new Input(environment);
             IEnumerable<Package> packages = loadInput.Process(input);
             Graph graph = buildGraph.Process(packages);
             Graph mergedGraph = mergeCircleNodes.Process(graph);

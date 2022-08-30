@@ -1,0 +1,10 @@
+libtirpc -> glibc
+gawk -> filesystem
+gawk -> glibc
+sed -> glibc
+texinfo -> glibc
+libutempter -> glibc
+libunistring -> glibc
+json-c -> glibc
+redis -> glibc
+redis -> systemd

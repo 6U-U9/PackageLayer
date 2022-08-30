@@ -63,7 +63,7 @@ namespace Refactor.Steps
                 input.layers.Reverse();
                 graphDirection = 1 - graphDirection;
             }
-            Console.WriteLine("-----");
+            //Console.WriteLine("-----");
             Hierarchies merged = new Hierarchies();
             for (int i = 0; i < Math.Min(skippedLayerCount, input.Count); i++)
             {
@@ -74,7 +74,7 @@ namespace Refactor.Steps
                 Layer layer = input[skippedLayerCount];
                 for (int i = skippedLayerCount + 1; i < input.Count; i++)
                 {
-                    Console.WriteLine(GetRelationCount(input[i], layer));
+                    //Console.WriteLine(GetRelationCount(input[i], layer));
                     if (Judge(GetRelationCount(input[i], layer)))
                     {
                         layer = layer.Concat(input[i]);

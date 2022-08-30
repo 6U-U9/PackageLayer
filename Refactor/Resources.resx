@@ -142,4 +142,22 @@
   <data name="input_test" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\input_test.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
   </data>
+  <data name="leap_mysql" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\leap_mysql.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="leap_nginx" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\leap_nginx.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="leap_redis" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\leap_redis.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="reverse_mysql" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\reverse_mysql.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="reverse_nginx" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\reverse_nginx.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="reverse_redis" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\reverse_redis.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
 </root>

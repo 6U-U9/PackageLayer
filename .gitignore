@@ -1,5 +1,7 @@
 .vs/
 *.xlsx
+Debug/
 bin/
 obj/
 .idea/
+Layer.sln.DotSettings.user

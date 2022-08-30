@@ -8,22 +8,22 @@ using Refactor.Core;
 
 namespace Refactor.Procedures
 {
-    public class ImprovedMergeToValue : Procedure
+    public class ImprovedMergeToValueWithAnchorsRemoveEdges : Procedure
     {
         public string environment;
         public string filepath;
         public string sheetname;
 
         Input input;
-        LoadInput loadInput;
+        LoadInputAndRemove loadInput;
         BuildGraph buildGraph;
         MergeCircleNodes mergeCircleNodes;
         BuildIndirectEdges buildIndirectEdges;
-        GenerateTopoList generateTopoList;
-        ImprovedLayer improvedLayer;
+        GenerateTopoListWithAnchors generateTopoList;
+        ImprovedLayerWithAnchors improvedLayer;
         MergeLayerToCertainCount mergeLayer;
 
-        public ImprovedMergeToValue(string environment, string outputPath)
+        public ImprovedMergeToValueWithAnchorsRemoveEdges(string environment, string outputPath)
         {
             this.environment = environment;
             this.filepath = outputPath + ".xlsx";
@@ -32,14 +32,34 @@ namespace Refactor.Procedures
             int length = -1;
             int direction = 1;
             int methodIndex = 0;
+            List<string> anchors = new List<string>()
+            {
+                "glibc", 
+                "basesystem", 
+                "filesystem", 
+                "setup", 
+                "anolis-release", 
+                "coreutils", 
+                "gcc", 
+                "systemd",
+            };
+            List<string> removePackages = new List<string>()
+            {
+
+            };
+            List<(string, string)> removeEdges = new List<(string, string)>()
+            {
+
+            };
 
             input = new Input(environment);
-            loadInput = new LoadInput();
+            removeEdges.AddRange(input.reverseEdges);
+            loadInput = new LoadInputAndRemove(removePackages,removeEdges);
             buildGraph = new BuildGraph();
             mergeCircleNodes = new MergeCircleNodes();
             buildIndirectEdges = new BuildIndirectEdges(length);
-            generateTopoList = new GenerateTopoList(direction, methodIndex);
-            improvedLayer = new ImprovedLayer(direction);
+            generateTopoList = new GenerateTopoListWithAnchors(anchors, direction, methodIndex);
+            improvedLayer = new ImprovedLayerWithAnchors(anchors, direction);
             mergeLayer = new MergeLayerToCertainCount(4, direction, 0, 0, 0, 1);
         }
         public override List<string> Description()

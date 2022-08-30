@@ -8,33 +8,53 @@ using Refactor.Core;
 
 namespace Refactor.Procedures
 {
-    public class MaxDepthMergeByThreshold : Procedure
+    public class MaxDepthMergeToValueWithAnchorsRemoveEdges : Procedure
     {
         public string environment;
         public string filepath;
         public string sheetname;
 
         Input input;
-        LoadInput loadInput;
+        LoadInputAndRemove loadInput;
         BuildGraph buildGraph;
         MergeCircleNodes mergeCircleNodes;
-        MaxDepthLayer maxDepthLayer;
-        MergeLayerByThreshold mergeLayer;
+        MaxDepthLayerWithAnchors maxDepthLayer;
+        MergeLayerToCertainCount mergeLayer;
 
-        public MaxDepthMergeByThreshold(string environment, string outputPath)
+        public MaxDepthMergeToValueWithAnchorsRemoveEdges(string environment, string outputPath)
         {
             this.environment = environment;
             this.filepath = outputPath + ".xlsx";
             this.sheetname = "最大深度算法";
 
             int direction = 1;
+            List<string> anchors = new List<string>()
+            {
+                "glibc", 
+                "basesystem", 
+                "filesystem", 
+                "setup", 
+                "anolis-release", 
+                "coreutils", 
+                "gcc", 
+                "systemd",
+            };
+            List<string> removePackages = new List<string>()
+            {
+
+            };
+            List<(string, string)> removeEdges = new List<(string, string)>()
+            {
+
+            };
 
             input = new Input(environment);
-            loadInput = new LoadInput();
+            removeEdges.AddRange(input.reverseEdges);
+            loadInput = new LoadInputAndRemove(removePackages, removeEdges);
             buildGraph = new BuildGraph();
             mergeCircleNodes = new MergeCircleNodes();
-            maxDepthLayer = new MaxDepthLayer(direction);
-            mergeLayer = new MergeLayerByThreshold(0, direction, 2, 0, 1, 1);
+            maxDepthLayer = new MaxDepthLayerWithAnchors(anchors, direction);
+            mergeLayer = new MergeLayerToCertainCount(4, direction, 0, 0, 0, 1);
         }
         public override List<string> Description()
         {
@@ -54,7 +74,6 @@ namespace Refactor.Procedures
             IEnumerable<Package> packages = loadInput.Process(input);
             Graph graph = buildGraph.Process(packages);
             Graph mergedGraph = mergeCircleNodes.Process(graph);
-            mergeLayer.threshold = mergedGraph.nodeSet.Values.ToHashSet().Count() / 2;
             Hierarchies hierarchies = maxDepthLayer.Process(mergedGraph);
             Hierarchies mergedhierarchies = mergeLayer.Process(hierarchies);
             Output.HierarchiesOutput(filepath, sheetname, Description(), mergedhierarchies);

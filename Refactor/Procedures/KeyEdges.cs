@@ -16,6 +16,7 @@ public class KeyEdges : Procedure
 
     public int threshold;
 
+    Input input;
     LoadInput loadInput;
     private FindKeyEdges findKeyEdges;
 
@@ -27,6 +28,7 @@ public class KeyEdges : Procedure
 
         this.threshold = 60000;
 
+        input = new Input(environment);
         loadInput = new LoadInput();
         findKeyEdges = new FindKeyEdges(threshold);
     }
@@ -42,7 +44,6 @@ public class KeyEdges : Procedure
 
     public override void Execute()
     {
-        Input input = new Input(environment);
         IEnumerable<Package> packages = loadInput.Process(input);
         List<(Package,Package,int)> edges = findKeyEdges.BuildEdges(packages.ToList());
         Output.EdgesOutput(filepath, sheetname, Description(), edges);

@@ -34,7 +34,7 @@ namespace Refactor.Steps
             {
                 if (removePackages.Contains(edges[0]) || removePackages.Contains(edges[1]))
                     continue;
-                if(removeEdges.Contains((edges[0],edges[1]))) 
+                if (removeEdges.Contains((edges[0],edges[1]))) 
                     continue;
                 
                 Package dependent = Package.Create(edges[0], input.humanLayers[edges[0]]);

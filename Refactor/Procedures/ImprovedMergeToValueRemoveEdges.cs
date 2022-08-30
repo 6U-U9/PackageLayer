@@ -14,6 +14,7 @@ namespace Refactor.Procedures
         public string filepath;
         public string sheetname;
 
+        Input input;
         LoadInputAndRemove loadInput;
         BuildGraph buildGraph;
         MergeCircleNodes mergeCircleNodes;
@@ -27,7 +28,8 @@ namespace Refactor.Procedures
             this.environment = environment;
             this.filepath = outputPath + ".xlsx";
             this.sheetname = "改进算法";
-
+            
+            
             int length = -1;
             int direction = 1;
             int methodIndex = 0;
@@ -40,6 +42,7 @@ namespace Refactor.Procedures
                 ("glibc","libselinux"),
             };
 
+            input = new Input(environment);
             loadInput = new LoadInputAndRemove(removePackages, removeEdges);
             buildGraph = new BuildGraph();
             mergeCircleNodes = new MergeCircleNodes();
@@ -65,7 +68,6 @@ namespace Refactor.Procedures
 
         public override void Execute()
         {
-            Input input = new Input(environment);
             IEnumerable<Package> packages = loadInput.Process(input);
             Graph graph = buildGraph.Process(packages);
             Graph mergedGraph = mergeCircleNodes.Process(graph);

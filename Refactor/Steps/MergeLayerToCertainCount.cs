@@ -63,7 +63,7 @@ namespace Refactor.Steps
                 merged.layers.Reverse();
                 graphDirection = 1 - graphDirection;
             }
-            Console.WriteLine("-----start");
+            //Console.WriteLine("-----start");
             while (finalLayerCount < merged.Count)
             {
                 int layerIndex = -1, dependencyCount;
@@ -75,7 +75,7 @@ namespace Refactor.Steps
                 for (int i = skippedLayerCount+1; i < merged.Count; i++)
                 {
                     int count = GetRelationCount(merged[i], merged[i - 1]);
-                    Console.WriteLine(count);
+                    //Console.WriteLine(count);
                     if (Judge(count, dependencyCount))
                     {
                         layerIndex = i - 1;
