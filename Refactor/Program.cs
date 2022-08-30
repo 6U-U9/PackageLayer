@@ -33,4 +33,4 @@ foreach (string e in envs)
     maxDepthMergeRemoveEdges.Execute();
 }
 
-Console.WriteLine("FUCK FUCK FUCK");
+Console.WriteLine("Finished");
