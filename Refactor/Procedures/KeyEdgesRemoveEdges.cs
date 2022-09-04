@@ -8,7 +8,7 @@ using Refactor.Core;
 
 namespace Refactor.Procedures;
 
-public class KeyEdges : Procedure
+public class KeyEdgesRemoveEdges : Procedure
 {
     public string environment;
     public string filepath;
@@ -17,19 +17,27 @@ public class KeyEdges : Procedure
     public int threshold;
 
     Input input;
-    LoadInput loadInput;
+    LoadInputAndRemove loadInput;
     FindKeyEdges findKeyEdges;
 
-    public KeyEdges(string environment, string outputPath)
+    public KeyEdgesRemoveEdges(string environment, string outputPath)
     {
         this.environment = environment;
         this.filepath = outputPath + ".xlsx";
         this.sheetname = "边在环中的计数";
 
         this.threshold = 60000;
+        List<string> removePackages = new List<string>()
+        {
+
+        };
+        List<(string, string)> removeEdges = new List<(string, string)>()
+            {
+                ("glibc","libselinux"),
+            };
 
         input = new Input(environment);
-        loadInput = new LoadInput();
+        loadInput = new LoadInputAndRemove(removePackages, removeEdges);
         findKeyEdges = new FindKeyEdges(threshold);
     }
     public override List<string> Description()

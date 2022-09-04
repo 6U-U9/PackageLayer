@@ -64,19 +64,19 @@ namespace Refactor.Steps
                 }
                 else if (next == start)
                 {
-                    //string cs = "";
+                    string cs = "";
                     Package p = package;
                     Package prev = forward[package];
                     circleEdgeCount[package][next] ++;
                     while (p != start)
                     {
-                        //cs = p.ToString() + cs;
+                        cs = p.ToString() + "; " + cs;
                         circleEdgeCount[prev][p] ++;
                         p = prev;
                         prev = forward[prev];
                     }
-                    //cs = start.ToString() + cs + "\n";
-                    //Console.WriteLine(cs);
+                    cs = start.ToString() + "; " + cs + "\n";
+                    Console.WriteLine(cs);
                 }
             }
             visited[package] = false;

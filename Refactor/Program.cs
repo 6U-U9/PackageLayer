@@ -30,8 +30,9 @@ foreach (string e in envs)
     Procedure improvedMergeWithAnchorsRemoveEdges = new ImprovedMergeToValueWithAnchorsRemoveEdges(e, e + "_merge4_anchor_remove_edges");
     Procedure maxDepthMergeWithAnchorsRemoveEdges = new MaxDepthMergeToValueWithAnchorsRemoveEdges(e, e + "_merge4_anchor_remove_edges");
 
-    Procedure findKeyEdges = new KeyEdges(e, e);
+    Procedure findKeyEdges = new KeyEdgesRemoveEdges(e, e);
 
+    findKeyEdges.Execute();
     origin.Execute();
     iterateMergeWithAnchorsRemoveEdges.Execute();
     improvedMergeWithAnchorsRemoveEdges.Execute();
