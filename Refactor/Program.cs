@@ -34,9 +34,7 @@ foreach (string e in envs)
 
     findKeyEdges.Execute();
     origin.Execute();
-    iterateMergeWithAnchorsRemoveEdges.Execute();
-    improvedMergeWithAnchorsRemoveEdges.Execute();
-    maxDepthMergeWithAnchorsRemoveEdges.Execute();
+    enumeration.Execute();
 }
 
 Console.WriteLine("Finished");

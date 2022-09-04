@@ -4,7 +4,7 @@
     {
         public static Dictionary<string, Package> packages = new();
         public static Package NullPackage = new Package("");
-        public static Package Create(string name, int? human = null)
+        public static Package Create(string name, int human = -1)
         {
             if (!packages.ContainsKey(name))
             {
@@ -18,14 +18,14 @@
             return packages[name];
         }
         public string name { get; set; }
-        public int? human { get; set; }
+        public int human { get; set; }
         public List<string> category = new List<string>();
         public int relationCount { get { return dependency.Count + dependent.Count; } }
 
         public List<Package> dependency = new List<Package>();
         public List<Package> dependent = new List<Package>();
 
-        private Package(string name, int? human = null)
+        private Package(string name, int human = -1)
         {
             this.name = name;
             this.human = human;
