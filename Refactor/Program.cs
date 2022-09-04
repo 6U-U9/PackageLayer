@@ -31,11 +31,12 @@ foreach (string e in envs)
     Procedure maxDepthMergeWithAnchorsRemoveEdges = new MaxDepthMergeToValueWithAnchorsRemoveEdges(e, e + "_merge4_anchor_remove_edges");
 
     Procedure findKeyEdges = new KeyEdges(e, e);
+    Procedure humanAnalysis = new HumanAnalysis(e, e+"_human_analysis");
+    Procedure enumeration = new Enumeration(e, e);
 
+    humanAnalysis.Execute();
     origin.Execute();
-    iterateMergeWithAnchorsRemoveEdges.Execute();
-    improvedMergeWithAnchorsRemoveEdges.Execute();
-    maxDepthMergeWithAnchorsRemoveEdges.Execute();
+    enumeration.Execute();
 }
 
 Console.WriteLine("Finished");

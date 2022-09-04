@@ -135,5 +135,56 @@ namespace Refactor.Core
                 p.Save();
             }
         }
+        public static void HumanAnalysisOutput(string filepath, string sheetPrefix, List<string> descriptions, Dictionary<Package, double> vertex, Dictionary<(Package, Package), int> edges)
+        {
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using (var p = new ExcelPackage(new FileInfo(filepath)))
+            {
+                {
+                    var sheetName = sheetPrefix + "人工边";
+                    var hasSheet = p.Workbook.Worksheets[sheetName];
+                    if (hasSheet != null)
+                    {
+                        p.Workbook.Worksheets.Delete(sheetName);
+                    }
+                    ExcelWorksheet worksheet = p.Workbook.Worksheets.Add(sheetName);
+                    worksheet.Cells[1, 1].Value = "边";
+                    worksheet.Cells[1, 6].Value = "方向";
+                    int count = 2;
+                    foreach (var edge in edges)
+                    {
+                        worksheet.Cells[count, 1].Value = edge.Key.Item1.ToString();
+                        worksheet.Cells[count, 2].Value = edge.Key.Item1.human;
+                        worksheet.Cells[count, 3].Value = "->";
+                        worksheet.Cells[count, 4].Value = edge.Key.Item2.ToString();
+                        worksheet.Cells[count, 5].Value = edge.Key.Item2.human;
+                        worksheet.Cells[count, 6].Value = edge.Value;
+                        count++;
+                    }
+                }
+                {
+                    var sheetName = sheetPrefix + "人工点";
+                    var hasSheet = p.Workbook.Worksheets[sheetName];
+                    if (hasSheet != null)
+                    {
+                        p.Workbook.Worksheets.Delete(sheetName);
+                    }
+                    ExcelWorksheet worksheet = p.Workbook.Worksheets.Add(sheetName);
+                    worksheet.Cells[1, 1].Value = "点";
+                    worksheet.Cells[1, 2].Value = "人工";
+                    worksheet.Cells[1, 3].Value = "依赖平均";
+                    int count = 2;
+                    foreach (var v in vertex)
+                    {
+                        worksheet.Cells[count, 1].Value = v.Key.ToString();
+                        worksheet.Cells[count, 2].Value = v.Key.human;
+                        worksheet.Cells[count, 3].Value = v.Value;
+                        count++;
+                    }
+                }
+
+                p.Save();
+            }
+        }
     }
 }
