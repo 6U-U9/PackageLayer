@@ -23,7 +23,7 @@ public class HumanAnalysis : Procedure
     {
         this.environment = environment;
         this.filepath = outputPath + ".xlsx";
-        this.sheetname = "人工分层分析";
+        this.sheetname = "分析人工分层";
 
         input = new Input(environment);
         loadInput = new LoadInput();

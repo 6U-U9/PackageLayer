@@ -45,7 +45,7 @@ namespace Refactor.Procedures
             };
             List<(string, string)> removeEdges = new List<(string, string)>()
             {
-
+                ("glibc","libselinux"),
             };
 
             input = new Input(environment);

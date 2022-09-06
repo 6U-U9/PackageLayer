@@ -30,11 +30,21 @@ foreach (string e in envs)
     Procedure improvedMergeWithAnchorsRemoveEdges = new ImprovedMergeToValueWithAnchorsRemoveEdges(e, e + "_merge4_anchor_remove_edges");
     Procedure maxDepthMergeWithAnchorsRemoveEdges = new MaxDepthMergeToValueWithAnchorsRemoveEdges(e, e + "_merge4_anchor_remove_edges");
 
-    Procedure findKeyEdges = new KeyEdgesRemoveEdges(e, e);
+    Procedure originMergeWithLayer1 = new OriginMergeToValueWithLayer1(e, e + "_merge4_fixed_layer1");
+    Procedure iterateMergeWithLayer1 = new IterateMergeToValueWithLayer1(e, e + "_merge4_fixed_layer1");
+    Procedure improvedMergeWithLayer1 = new ImprovedMergeToValueWithLayer1(e, e + "_merge4_fixed_layer1");
+    Procedure maxDepthMergeWithLayer1 = new MaxDepthMergeToValueWithLayer1(e, e + "_merge4_fixed_layer1");
 
-    findKeyEdges.Execute();
-    origin.Execute();
-    enumeration.Execute();
+    Procedure findKeyEdges = new KeyEdgesRemoveEdges(e, e);
+    Procedure humanAnalysis = new HumanAnalysis(e, e+"_human_analysis");
+
+    //findKeyEdges.Execute();
+
+    //humanAnalysis.Execute();
+    originMergeWithLayer1.Execute();
+    iterateMergeWithLayer1.Execute();
+    improvedMergeWithLayer1.Execute();
+    maxDepthMergeWithLayer1.Execute();
 }
 
 Console.WriteLine("Finished");

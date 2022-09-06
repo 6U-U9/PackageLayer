@@ -8,22 +8,23 @@ using Refactor.Core;
 
 namespace Refactor.Procedures
 {
-    public class IterateMergeToValueWithAnchorsRemoveEdges : Procedure
+    public class IterateMergeToValueWithLayer1 : Procedure
     {
         public string environment;
         public string filepath;
         public string sheetname;
 
         Input input;
-        LoadInputAndRemove loadInput;
+        LoadInput loadInput;
         BuildGraph buildGraph;
         MergeCircleNodes mergeCircleNodes;
+        GenerateFixedNode generateFixedNode;
         BuildIndirectEdges buildIndirectEdges;
-        GenerateTopoListWithAnchors generateTopoList;
-        IterateLayerWithAnchors iterateLayer;
+        GenerateTopoListWithLayer1 generateTopoList;
+        IterateLayerWithLayer1 iterateLayer;
         MergeLayerToCertainCount mergeLayer;
-
-        public IterateMergeToValueWithAnchorsRemoveEdges(string environment, string outputPath)
+        
+        public IterateMergeToValueWithLayer1(string environment, string outputPath)
         {
             this.environment = environment;
             this.filepath = outputPath + ".xlsx";
@@ -43,23 +44,15 @@ namespace Refactor.Procedures
                 "gcc",
                 "systemd",
             };
-            List<string> removePackages = new List<string>()
-            {
-
-            };
-            List<(string, string)> removeEdges = new List<(string, string)>()
-            {
-                ("glibc","libselinux"),
-            };
 
             input = new Input(environment);
-            removeEdges.AddRange(input.reverseEdges);
-            loadInput = new LoadInputAndRemove(removePackages, removeEdges);
+            loadInput = new LoadInput();
             buildGraph = new BuildGraph();
             mergeCircleNodes = new MergeCircleNodes();
+            generateFixedNode = new GenerateFixedNode(anchors, direction);
             buildIndirectEdges = new BuildIndirectEdges(length);
-            generateTopoList = new GenerateTopoListWithAnchors(anchors, direction, methodIndex);
-            iterateLayer = new IterateLayerWithAnchors(anchors, direction);
+            generateTopoList = new GenerateTopoListWithLayer1(anchors, direction, methodIndex);
+            iterateLayer = new IterateLayerWithLayer1(anchors, direction);
             mergeLayer = new MergeLayerToCertainCount(4, direction, 0, 0, 0, 1);
         }
         public override List<string> Description()
@@ -69,6 +62,7 @@ namespace Refactor.Procedures
                 loadInput.ToString(),
                 buildGraph.ToString(),
                 mergeCircleNodes.ToString(),
+                generateFixedNode.ToString(),
                 buildIndirectEdges.ToString(),
                 generateTopoList.ToString(),
                 iterateLayer.ToString(),
@@ -79,12 +73,12 @@ namespace Refactor.Procedures
 
         public override void Execute()
         {
-            Input input = new Input(environment);
             IEnumerable<Package> packages = loadInput.Process(input);
             Graph graph = buildGraph.Process(packages);
             Graph mergedGraph = mergeCircleNodes.Process(graph);
-            buildIndirectEdges.Process(mergedGraph);
-            List<Node> topolist = generateTopoList.Process(mergedGraph);
+            Graph fixNodeGraph = generateFixedNode.Process(mergedGraph);
+            buildIndirectEdges.Process(fixNodeGraph);
+            List<Node> topolist = generateTopoList.Process(fixNodeGraph);
             Hierarchies hierarchies = iterateLayer.Process(topolist);
             Hierarchies mergedhierarchies = mergeLayer.Process(hierarchies);
             Output.HierarchiesOutput(filepath, sheetname, Description(), mergedhierarchies);

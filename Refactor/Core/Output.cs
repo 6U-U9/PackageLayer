@@ -141,7 +141,7 @@ namespace Refactor.Core
             using (var p = new ExcelPackage(new FileInfo(filepath)))
             {
                 {
-                    var sheetName = sheetPrefix + "人工边";
+                    var sheetName = sheetPrefix + "边";
                     var hasSheet = p.Workbook.Worksheets[sheetName];
                     if (hasSheet != null)
                     {
@@ -163,7 +163,7 @@ namespace Refactor.Core
                     }
                 }
                 {
-                    var sheetName = sheetPrefix + "人工点";
+                    var sheetName = sheetPrefix + "点";
                     var hasSheet = p.Workbook.Worksheets[sheetName];
                     if (hasSheet != null)
                     {

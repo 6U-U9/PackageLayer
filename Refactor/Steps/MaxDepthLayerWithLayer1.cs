@@ -7,7 +7,7 @@ using Refactor.Core;
 
 namespace Refactor.Steps
 {
-    public class MaxDepthLayerWithAnchors : Step<Graph, Hierarchies>
+    public class MaxDepthLayerWithLayer1 : Step<Graph, Hierarchies>
     {
         public override string StepDescription
         {
@@ -30,7 +30,7 @@ namespace Refactor.Steps
                 string s = "";
                 foreach (string name in anchorNames)
                     s += name + ";";
-                return $"最大深度算法 算法方向：{directionDescriptions[direction]} 1层锚点：{s}";
+                return $"最大深度算法 算法方向：{directionDescriptions[direction]} 1层固定：{s}";
             }
         }
 
@@ -39,7 +39,7 @@ namespace Refactor.Steps
         private List<string> anchorNames;
         private Dictionary<Node,int> maxDepths = new Dictionary<Node,int>();
 
-        public MaxDepthLayerWithAnchors(List<string> anchors, int direction = 1)
+        public MaxDepthLayerWithLayer1(List<string> anchors, int direction = 1)
         {
             this.direction = direction;
             this.anchors = new List<Package>();
@@ -50,13 +50,18 @@ namespace Refactor.Steps
             HashSet<Node> nodes = input.nodeSet.Values.ToHashSet();
             Queue<Node> queue = new Queue<Node>();
             int maxDepth = 0;
+            foreach (Package p in anchors)
+            {
+                Node node = input.nodeSet[p];
+                queue.Enqueue(node);
+                maxDepths[node] = 0;
+            }
             foreach (Node node in nodes)
             {
-                if (node.GetOutDegree(direction) == 0)
-                {
-                    queue.Enqueue(node);
-                }
-                maxDepths[node] = 0;
+                if (node.HasIntersect(anchors))
+                    continue;
+                queue.Enqueue(node);
+                maxDepths[node] = 1;
             }
             while (queue.Count > 0)
             {
@@ -68,10 +73,6 @@ namespace Refactor.Steps
                     foreach (Node inNode in node.GetInEdges(direction))
                     {
                         maxDepths[inNode] = Math.Max(maxDepths[inNode], maxDepths[node] + 1);
-                        
-                        if (inNode.HasIntersect(anchors))
-                            maxDepths[inNode] = 0;
-                        
                         queue.Enqueue(inNode);
                     }
                 }

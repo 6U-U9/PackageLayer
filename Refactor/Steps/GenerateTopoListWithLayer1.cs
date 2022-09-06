@@ -8,7 +8,7 @@ using Refactor.Core;
 namespace Refactor.Steps
 {
 
-    public class GenerateTopoList : Step<Graph, List<Node>>
+    public class GenerateTopoListWithLayer1 : Step<Graph, List<Node>>
     {
         public override string StepDescription
         {
@@ -37,7 +37,7 @@ namespace Refactor.Steps
         }
         public override string ChineseDescription
         {
-            get
+            get 
             {
                 Dictionary<int, string> directionDescriptions;
                 Dictionary<int, string> methodDescriptions;
@@ -53,18 +53,25 @@ namespace Refactor.Steps
                     {2, "Compare indirect indegree in descending order" },
                     {3, "Compare indirect indegree in ascending order" },
                 };
-                return $"生成拓扑序列 算法方向：{directionDescriptions[direction]}";
+                string s = "";
+                foreach (string name in anchorNames)
+                    s += name + ";";
+                return $"生成拓扑序列 算法方向：{directionDescriptions[direction]} 1层锚点：{s}"; 
             }
         }
 
         public int direction = 0; // 0: build from bottom; 1: build from top
         public int methodIndex = 0;
         public Dictionary<int, IComparer<Node>> methods;
-        
-        public GenerateTopoList(int direction = 1, int methodIndex = 0)
+        public List<Package> anchors;
+        private List<string> anchorNames;
+        public GenerateTopoListWithLayer1(List<string> anchors, int direction = 1, int methodIndex = 0)
         {
             this.direction = direction;
             this.methodIndex = methodIndex;
+            this.anchors = new List<Package>();
+            this.anchorNames = anchors;
+            
             methods = new Dictionary<int, IComparer<Node>>()
             {
                 {0,new NodeComparerIndegreeThenIndirectDescend(direction)},
@@ -75,6 +82,10 @@ namespace Refactor.Steps
         }
         public override List<Node> Process(Graph input)
         {
+            foreach (string name in anchorNames)
+            {
+                this.anchors.Add(Package.Get(name));
+            }
             List<Node> list = new List<Node>();
             HashSet<Node> nodes = input.nodeSet.Values.ToHashSet();
             while (nodes.Count > 0)
@@ -90,13 +101,24 @@ namespace Refactor.Steps
                 {
                     nodes.Remove(node);
                     list.Add(node);
-                    foreach (Node inNode in node.GetInEdges(direction))
+                    foreach (Node dependent in node.dependents)
                     {
-                        inNode.GetOutEdges(direction).Remove(node);
+                        dependent.dependencies.Remove(node);
                     }
                 }
             }
             input.BuildEdges();
+            List<Node> fixedNode = new List<Node>();
+            foreach (Package p in anchors)
+            {
+                fixedNode.Add(input.nodeSet[p]);
+            }
+            foreach (Node node in fixedNode)
+            {
+                foreach (Node n in node.GetOutEdges(direction))
+                    n.GetInEdges(direction).Remove(node);
+                node.GetOutEdges(direction).Clear();
+            }
             return list;
         }
         public class NodeComparerIndegreeThenIndirectDescend : IComparer<Node>
