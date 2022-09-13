@@ -56,7 +56,7 @@ namespace Refactor.Steps
                 string s = "";
                 foreach (string name in anchorNames)
                     s += name + ";";
-                return $"生成拓扑序列 算法方向：{directionDescriptions[direction]} 1层锚点：{s}"; 
+                return $"生成拓扑序列 算法方向：{directionDescriptions[direction]} 无特殊处理"; 
             }
         }
 
@@ -101,9 +101,9 @@ namespace Refactor.Steps
                 {
                     nodes.Remove(node);
                     list.Add(node);
-                    foreach (Node dependent in node.dependents)
+                    foreach (Node inNode in node.GetInEdges(direction))
                     {
-                        dependent.dependencies.Remove(node);
+                        inNode.GetOutEdges(direction).Remove(node);
                     }
                 }
             }

@@ -27,7 +27,7 @@ namespace Refactor.Procedures
             this.filepath = outputPath + ".xlsx";
             this.sheetname = "最大深度算法";
 
-            int direction = 1;
+            int direction = 1; //因为锚点的存在，算法不能正向运行
             List<string> anchors = new List<string>()
             {
                 "glibc", 

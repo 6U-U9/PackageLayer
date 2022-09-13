@@ -32,9 +32,11 @@ namespace Refactor.Steps
         }
 
         public int direction = 0; // 0: build from bottom; 1: build from top
-        public OriginalLayer(int direction = 1)
+        private bool iterate = false;
+        public OriginalLayer(int direction = 1, bool iterate = false)
         {
             this.direction = direction;
+            this.iterate = iterate;
         }
         public override Hierarchies Process(List<Node> topoList)
         {
@@ -68,7 +70,7 @@ namespace Refactor.Steps
                 i++;
             }
             
-            if (direction == 0)
+            if (direction == 0 && !iterate)
                 layers.Reverse();
             return layers;
         }

@@ -30,7 +30,7 @@ namespace Refactor.Procedures
             this.sheetname = "迭代算法";
 
             int length = -1;
-            int direction = 1;
+            int direction = 1; //因为锚点的存在，算法不能正向运行
             int methodIndex = 0;
             List<string> anchors = new List<string>()
             {

@@ -103,9 +103,9 @@ namespace Refactor.Steps
                 {
                     nodes.Remove(node);
                     list.Add(node);
-                    foreach (Node dependent in node.dependents)
+                    foreach (Node inNode in node.GetInEdges(direction))
                     {
-                        dependent.dependencies.Remove(node);
+                        inNode.GetOutEdges(direction).Remove(node);
                     }
                 }
             }

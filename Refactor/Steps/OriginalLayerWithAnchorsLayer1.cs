@@ -30,18 +30,20 @@ namespace Refactor.Steps
                 string s = "";
                 foreach (string name in anchorNames)
                     s += name + ";";
-                return $"原始算法方向：{directionDescriptions[direction]} 1层固定：{s}";
+                return $"原始算法方向：{directionDescriptions[direction]} 1层固定：{s}的包代替入度为0的点作为算法起始时的第一层";
             }
         }
 
         public int direction = 0; // 0: build from bottom; 1: build from top
         public List<Package> anchors;
         private List<string> anchorNames;
-        public OriginalLayerWithLayer1(List<string> anchors, int direction = 1)
+        private bool iterate = false;
+        public OriginalLayerWithLayer1(List<string> anchors, int direction = 1, bool iterate = false)
         {
             this.direction = direction;
             this.anchors = new List<Package>();
             this.anchorNames = anchors;
+            this.iterate = iterate;
         }
         public override Hierarchies Process(List<Node> topoList)
         {
@@ -94,7 +96,7 @@ namespace Refactor.Steps
                 i++;
             }
             
-            if (direction == 0)
+            if (direction == 0 && !iterate)
                 layers.Reverse();
             return layers;
         }

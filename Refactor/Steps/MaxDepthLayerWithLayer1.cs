@@ -30,7 +30,7 @@ namespace Refactor.Steps
                 string s = "";
                 foreach (string name in anchorNames)
                     s += name + ";";
-                return $"最大深度算法 算法方向：{directionDescriptions[direction]} 1层固定：{s}";
+                return $"最大深度算法 算法方向：{directionDescriptions[direction]} 1层固定：{s} 的包代替入度为0的点作为算法起始时的第一层，其余入度为0的点分到2层";
             }
         }
 

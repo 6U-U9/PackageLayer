@@ -31,7 +31,7 @@ namespace Refactor.Procedures
             this.sheetname = "改进算法";
 
             int length = -1;
-            int direction = 1;
+            int direction = 1; //因为锚点的存在，算法不能正向运行
             int methodIndex = 0;
             List<string> anchors = new List<string>()
             {
@@ -53,7 +53,7 @@ namespace Refactor.Procedures
             buildIndirectEdges = new BuildIndirectEdges(length);
             generateTopoList = new GenerateTopoListWithLayer1(anchors, direction, methodIndex);
             improvedLayer = new ImprovedLayerWithLayer1(anchors, direction);
-            mergeLayer = new MergeLayerToCertainCount(4, direction, 0, 0, 0, 1);
+            mergeLayer = new MergeLayerToCertainCount(4, direction, 1, 0, 0, 1);
         }
         public override List<string> Description()
         {

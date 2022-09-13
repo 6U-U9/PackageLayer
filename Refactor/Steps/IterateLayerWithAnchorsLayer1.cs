@@ -30,7 +30,7 @@ namespace Refactor.Steps
                 string s = "";
                 foreach (string name in anchorNames)
                     s += name + ";";
-                return $"迭代算法 算法方向：{directionDescriptions[direction]} 1层固定：{s}";
+                return $"迭代算法 算法方向：{directionDescriptions[direction]} 1层固定：{s}的包代替入度为0的点作为算法起始时的第一层";
             }
         }
 
@@ -54,8 +54,8 @@ namespace Refactor.Steps
             mergeCircleNodes = new MergeCircleNodes();
             buildIndirectEdges = new BuildIndirectEdges(length);
             generateTopoList = new GenerateTopoList(direction, methodIndex);
-            originalLayerWithAnchor = new OriginalLayerWithLayer1(anchors, direction);
-            originalLayer = new OriginalLayer();
+            originalLayerWithAnchor = new OriginalLayerWithLayer1(anchors, direction, true);
+            originalLayer = new OriginalLayer(direction, true);
         }
         public override Hierarchies Process(List<Node> input)
         {

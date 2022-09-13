@@ -53,7 +53,7 @@ namespace Refactor.Steps
             mergeCircleNodes = new MergeCircleNodes();
             buildIndirectEdges = new BuildIndirectEdges(length);
             generateTopoList = new GenerateTopoListWithAnchors(anchors, direction, methodIndex);
-            originalLayer = new OriginalLayerWithAnchors(anchors, direction);
+            originalLayer = new OriginalLayerWithAnchors(anchors, direction, true);
         }
         public override Hierarchies Process(List<Node> input)
         {

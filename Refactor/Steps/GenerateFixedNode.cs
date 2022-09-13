@@ -24,7 +24,7 @@ namespace Refactor.Steps
                 string s = "";
                 foreach (string name in anchorNames)
                     s += name + ";";
-                return $"1层固定：{s}";
+                return $"从环节点中分离1层固定：{s} 的包。每个包生成一个独立的节点；环中其他包仍作为一个节点；为了保持图仍为有向无环图，去除指向锚定节点的边";
             }
         }
 
